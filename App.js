@@ -1,14 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import HomeScreen from './screen/Home';
 import ProfileScreen from './screen/Profile';
 import { DrawerNavigator } from 'react-navigation';
 
 export default class App extends React.Component {
   render() {
-    return <Navigator />;
+    return (<Navigator />);
   }
 }
+
 
 const Navigator = DrawerNavigator({
   home: {
@@ -27,5 +28,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
