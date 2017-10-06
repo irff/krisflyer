@@ -17,6 +17,8 @@ const Navigator = DrawerNavigator({
   profile: {
     screen: ProfileScreen,
   },
+}, {
+  initialRouteName: 'home',
 });
 
 const styles = StyleSheet.create({
