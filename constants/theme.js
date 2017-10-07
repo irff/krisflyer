@@ -1,6 +1,12 @@
 export default {
 	color: {
 		statusBar: '#333',
-		white: '#fff',
+		white: '#FFF',
+		black: '#272C33',
+		blue: '#274378',
+		yellow: '#FFB945',
+		divider: '#DDD',
+		canvas: '#F5F5F5',
+		yellowLight: '#FFF0DD',
 	},
 }
