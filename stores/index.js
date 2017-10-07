@@ -1,5 +1,14 @@
 import { observable, action, computed } from 'mobx';
-import { UserModel, LevelModel, ItemModel, MilestoneModel } from '../models';
+import {
+	LeaderModel,
+	UserModel,
+	LevelModel,
+	ItemModel,
+	MilestoneModel,
+	PurchasedItemModel,
+	VoucherModel,
+	EventModel
+ } from '../models';
 
 class CounterStore {
 	constructor(rootStore) {
@@ -22,7 +31,7 @@ class UserStore {
         this.rootStore = rootStore;
     }
 
-    @observable user = new UserModel(this, 'Tri Ahmad Irfan', 1250, 276, 0);
+    @observable user = new UserModel(this, 'Tri Ahmad Irfan', 7192, 3675, 0);
 }
 
 class LevelListStore {
@@ -200,6 +209,10 @@ class PurchasedItemListStore {
 	}
 
 	@observable purchased_items = [];
+
+	addPurchasedItem(item) {
+		this.purchased_items.push(new PurchasedItemModel(item));
+	}
 }
 
 
@@ -219,6 +232,35 @@ class EventListStore {
 	@observable events = [];
 }
 
+class LeaderListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	leaders = [
+		new LeaderModel(
+			new UserModel(this, 'Shylla E. Pramadhani', 10921, 0, 0),
+			new PurchasedItemListStore()
+		),
+		new LeaderModel(
+			new UserModel(this, 'Michael Jones', 6781, 0, 0),
+			new PurchasedItemListStore()
+		),
+		new LeaderModel(
+			new UserModel(this, 'Tim Nguyen', 4512, 0, 0),
+			new PurchasedItemListStore()
+		),
+		new LeaderModel(
+			new UserModel(this, 'Jane Doe', 2153, 0, 0),
+			new PurchasedItemListStore()
+		),
+		new LeaderModel(
+			new UserModel(this, 'Kim Seok-Hyeo', 4291, 0, 0),
+			new PurchasedItemListStore()
+		)
+	];
+}
+
 class RootStore {
 	constructor() {
 		this.counterStore = new CounterStore(this);
@@ -229,6 +271,7 @@ class RootStore {
 		this.purchasedItemListStore = new PurchasedItemListStore(this);
 		this.voucherListStore = new VoucherListStore(this);
 		this.eventListStore = new EventListStore(this);
+		this.leaderListStore = new LeaderListStore(this);
 	}
 }
 

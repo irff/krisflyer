@@ -127,23 +127,43 @@ export class ItemModel {
     price = 0;
     expired = false;
 
-    @action buyItem() {
-
+    @action purchaseItem() {
+        user = this.store.rootStore.userStore.user;
+        purchasedItems = this.store.purchasedItemListStore;
+        if(user.points >= this.price) {
+            purchasedItems.addPurchasedItem(this);
+        } else {
+            throw new Error('Insufficient points');
+        }
     }
 }
 
 export class PurchasedItemModel {
-    constructor(item, user) {
+    constructor(item) {
+        this.purchase_date = Date.now();
+        this.expiry_date = Date.now();
+        this.expiry_date.setDate(expiry_date.getDate() + 30);
         this.id = Utils.uuid();
         this.item = item;
-        this.user = user;
     }
 
     id = '';
     item = '';
-    user = '';
-    @observable is_used = false;
-    @observable used_datetime = '';
+    @observable purchase_date = '';
+    @observable expiry_date = '';
+
+    @observable is_invalidated = false;
+    @observable invalidated_datetime = '';
+
+    @computed get isExpired() {
+        return expiry_date < Date.now();
+    }
+
+    @action invalidateItem() {
+        this.is_invalidated = true;
+        this.invalidated_datetime = Date.now();
+    }
+
 }
 
 export class VoucherModel {
@@ -181,4 +201,15 @@ export class EventModel {
     start_datetime = '';
     end_datetime = '';
     @observable is_active = false;  
+}
+
+
+export class LeaderModel {
+    constructor(user, purchased_item_list) {
+        this.user = user;
+        this.purchased_item_list = purchased_item_list;
+    }
+
+    user = '';
+    purchased_item_list = '';
 }
