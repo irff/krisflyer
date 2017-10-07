@@ -1,5 +1,5 @@
 import { observable, action, computed } from 'mobx';
-import { UserModel, LevelModel, MilestoneModel } from '../models';
+import { UserModel, LevelModel, ItemModel, MilestoneModel } from '../models';
 
 class CounterStore {
 	constructor(rootStore) {

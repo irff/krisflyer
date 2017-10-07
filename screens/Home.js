@@ -5,6 +5,8 @@ import styled from 'styled-components/native';
 import theme from '../constants/theme';
 import { Flex, AlignCenter, AlignRight, ScreenTitle, Text, Bold } from '../components/common';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { observer, inject } from 'mobx-react';
+
 import Divider, { BorderDivider } from '../components/Divider';
 import ProgressBar from '../components/ProgressBar';
 import Button from '../components/Button';
@@ -16,6 +18,8 @@ import IconMiles from '../assets/icons/miles.png';
 import IconWait from '../assets/icons/wait.png';
 
 
+@inject('store')
+@observer
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Home',
@@ -72,8 +76,8 @@ export default class HomeScreen extends React.Component {
         </Header>
 
         <Section>
-          <Heading>Skylar White</Heading>
-          <Text><Bold>45,560</Bold> points • KrisFlyer Elite <Bold>Silver</Bold></Text>
+          <Heading>{this.props.store.userStore.user.name}</Heading>
+          <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.nextLevelName}</Text>
 
           <BorderDivider />
 
@@ -82,14 +86,14 @@ export default class HomeScreen extends React.Component {
             <Text>See leaderboard ></Text>
           </HeadingNavigation>
 
-          <ProgressBar width={45560/50000} />
-          <Text style={{ marginTop: 8 }}>{50000-45560} more miles to unlock KrisFlyer Elite Gold</Text>
+          <ProgressBar width={((25000-this.props.store.userStore.user.getRemainingMiles))/25000} />
+          <Text style={{ marginTop: 8 }}>{this.props.store.userStore.user.getRemainingMiles} more miles to unlock {this.props.store.userStore.user.nextLevelName}</Text>
         </Section>
 
         <Divider />
 
         <Section>
-          <PointsText>You have <BigBold>22,360</BigBold> points</PointsText>
+          <PointsText>You have <BigBold>{this.props.store.userStore.user.points}</BigBold> points</PointsText>
 
           <BorderDivider />
 
@@ -99,10 +103,10 @@ export default class HomeScreen extends React.Component {
           </HeadingNavigation>
 
           <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
-            {this.curations.map(item =>
-              <ItemCard key={item.text}>
-                <Image source={item.icon} style={{ width: 48 }} resizeMode="contain" />
-                <Text numberOfLines={2} alignText="center">{item.text}</Text>
+            {this.props.store.itemListStore.items.map(item =>
+              <ItemCard key={item.id}>
+                <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
+                <Text numberOfLines={2} alignText="center">{item.name}</Text>
               </ItemCard>
             )}
           </ScrollView>

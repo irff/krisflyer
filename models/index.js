@@ -25,6 +25,13 @@ export class UserModel {
         return levels[this.level].name;
     }
 
+    @computed get nextLevelName() {
+        next_level = this.level + 1;
+        levels = this.store.rootStore.levelListStore.levels;
+        console.log(`wkwwk ${levels[this.level].name}`);
+        return levels[next_level].name;
+    }
+
     @computed get getRemainingMiles() {
         next_level = this.level + 1;
 
