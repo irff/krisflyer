@@ -6,7 +6,7 @@ import theme from '../constants/theme';
 
 const StatusBarView = styled.View`
   padding-top: ${Constants.statusBarHeight};
-  background-color: ${theme.color.statusBar};
+  background-color: ${theme.color.black};
 `;
 
 const Screen = styled.View`

@@ -7,6 +7,7 @@ import { Flex, AlignCenter, AlignRight, ScreenTitle, Text, Bold } from '../compo
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
 
+import BaseScreen from '../components/BaseScreen';
 import Divider, { BorderDivider } from '../components/Divider';
 import ProgressBar from '../components/ProgressBar';
 import Button from '../components/Button';
@@ -52,73 +53,75 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView>
-        <Header colors={[ theme.color.black, theme.color.blue ]}>
-          <NavBar>
-            <HeaderIcon name="menu" size={16} color={theme.color.white} />
-            
-            <Flex>
-              <AlignCenter>
-                <ScreenTitle color={theme.color.white}>Home</ScreenTitle>
-              </AlignCenter>
-            </Flex>
+      <BaseScreen>
+        <ScrollView>
+          <Header colors={[ theme.color.black, theme.color.blue ]}>
+            <NavBar>
+              <HeaderIcon name="menu" size={16} color={theme.color.white} />
+              
+              <Flex>
+                <AlignCenter>
+                  <ScreenTitle color={theme.color.white}>Home</ScreenTitle>
+                </AlignCenter>
+              </Flex>
 
-            <HeaderIcon name="user" size={16} color={theme.color.white } />
-          </NavBar>
+              <HeaderIcon name="user" size={16} color={theme.color.white } />
+            </NavBar>
 
-          <ScrollView horizontal>
-            <BannerCard />
-            <BannerCard />
-            <BannerCard />
-            <BannerCard />
-          </ScrollView>
+            <ScrollView horizontal>
+              <BannerCard />
+              <BannerCard />
+              <BannerCard />
+              <BannerCard />
+            </ScrollView>
 
-        </Header>
+          </Header>
 
-        <Section>
-          <Heading>{this.props.store.userStore.user.name}</Heading>
-          <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.nextLevelName}</Text>
+          <Section>
+            <Heading>{this.props.store.userStore.user.name}</Heading>
+            <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.nextLevelName}</Text>
 
-          <BorderDivider />
+            <BorderDivider />
 
-          <HeadingNavigation>
-            <Bold>Miles Progress</Bold>
-            <Text>See leaderboard ></Text>
-          </HeadingNavigation>
+            <HeadingNavigation>
+              <Bold>Miles Progress</Bold>
+              <Text>See leaderboard ></Text>
+            </HeadingNavigation>
 
-          <ProgressBar width={((25000-this.props.store.userStore.user.getRemainingMiles))/25000} />
-          <Text style={{ marginTop: 8 }}>{this.props.store.userStore.user.getRemainingMiles} more miles to unlock {this.props.store.userStore.user.nextLevelName}</Text>
-        </Section>
+            <ProgressBar width={((25000-this.props.store.userStore.user.getRemainingMiles))/25000} />
+            <Text style={{ marginTop: 8 }}>{this.props.store.userStore.user.getRemainingMiles} more miles to unlock {this.props.store.userStore.user.nextLevelName}</Text>
+          </Section>
 
-        <Divider />
+          <Divider />
 
-        <Section>
-          <PointsText>You have <BigBold>{this.props.store.userStore.user.points}</BigBold> points</PointsText>
+          <Section>
+            <PointsText>You have <BigBold>{this.props.store.userStore.user.points}</BigBold> points</PointsText>
 
-          <BorderDivider />
+            <BorderDivider />
 
-          <HeadingNavigation>
-            <Subheading>Redeem Points for More Fun</Subheading>
-            <Text>See all ></Text>
-          </HeadingNavigation>
+            <HeadingNavigation>
+              <Subheading>Redeem Points for More Fun</Subheading>
+              <Text>See all ></Text>
+            </HeadingNavigation>
 
-          <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
-            {this.props.store.itemListStore.items.map(item =>
-              <ItemCard key={item.id}>
-                <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
-                <Text numberOfLines={2} alignText="center">{item.name}</Text>
-              </ItemCard>
-            )}
-          </ScrollView>
+            <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
+              {this.props.store.itemListStore.items.map(item =>
+                <ItemCard key={item.id}>
+                  <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
+                  <Text numberOfLines={2} textAlign="center">{item.name}</Text>
+                </ItemCard>
+              )}
+            </ScrollView>
 
-          <BorderDivider />
+            <BorderDivider />
 
-          <BoostText>Boost your points by completing quests!</BoostText>
-          <Button title="I want quests!" />
+            <BoostText>Boost your points by completing quests!</BoostText>
+            <Button title="I want quests!" />
 
-        </Section>
+          </Section>
 
-      </ScrollView>
+        </ScrollView>
+      </BaseScreen>
     );
   }
 }
@@ -184,7 +187,7 @@ const ItemCard = styled.View`
 `;
 
 const Header = styled(LinearGradient)`
-  padding-top: ${Constants.statusBarHeight + 20};
+  padding-top: 20;
   padding-bottom: 20;
 `;
 
