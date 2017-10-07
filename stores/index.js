@@ -261,6 +261,43 @@ class LeaderListStore {
 	];
 }
 
+class ProfileStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+		this.loaded = false;
+	}
+
+	async fetchData() {
+		const request = {
+		  "request": {
+		    "krisflyerNumber": "8987011905"
+		  },
+		  "clientUUID": "AnyUniqueStringToIdentifyTheRequest"
+		};
+
+		const headers = {
+			"Content-Type": "application/json",
+			"x-api-key": "du1yO8KLZm9PfFeg6OHQW8CFcpK1RMym3JXp78Uk"
+		};
+
+		const response = await fetch('https://apidev.singaporeair.com/appchallenge/krisflyer/getprofile', {
+			method: 'post',
+			body: JSON.stringify(request),
+			headers: new Headers(headers)
+		});
+
+		response_json = await response.json();
+
+		if(response_json.status == "SUCCESS") {
+			this.profile = response_json.response;
+			this.loaded = true;
+		} else {
+			throw Error('Error fetching profile from server');
+		}
+
+	}
+}
+
 class RootStore {
 	constructor() {
 		this.counterStore = new CounterStore(this);
@@ -272,8 +309,15 @@ class RootStore {
 		this.voucherListStore = new VoucherListStore(this);
 		this.eventListStore = new EventListStore(this);
 		this.leaderListStore = new LeaderListStore(this);
+
+
+		this.profileStore = new ProfileStore(this);
+		this.profileStore.fetchData();
 	}
 }
 
 const singleton = new RootStore();
+
+singleton.profileStore.fetchData();
+
 export default singleton;
