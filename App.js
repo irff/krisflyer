@@ -1,20 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import HomeScreen from './screens/Home';
 import ProfileScreen from './screens/Profile';
 import { DrawerNavigator } from 'react-navigation';
 
 
 export default class App extends React.Component {
-  componentDidMount() {
-    StatusBar.setBarStyle('light-content');
-    StatusBar.setBackgroundColor('#eeeeee');
-  }
-
   render() {
-    return <Navigator />;
+    return (<Navigator />);
   }
 }
+
 
 const Navigator = DrawerNavigator({
   home: {
@@ -33,5 +29,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });

@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { Constants } from 'expo';
+import { View, Text, Button, Alert } from 'react-native';
+import Expo, { Constants } from 'expo';
 import BaseScreen from '../components/BaseScreen';
 
 export default class HomeScreen extends React.Component {
@@ -9,6 +9,22 @@ export default class HomeScreen extends React.Component {
     drawerIcon: null,
   };
 
+  async login() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1287296804709524', {
+      permissions: ['public_profile'],
+    });
+
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
+    }
+  }
+
   render() {
     return (
       <BaseScreen>
@@ -16,6 +32,10 @@ export default class HomeScreen extends React.Component {
         <Button
           onPress={() => this.props.navigation.navigate('profile')}
           title="Go to profile"
+        />
+        <Button
+          onPress={this.login}
+          title="Login with Facebook"
         />
       </BaseScreen>
     );
