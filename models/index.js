@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx';
 import * as Utils from '../utils';
 
-class UserModel {
+export class UserModel {
     constructor(name, miles, points, level) {
         this.id = Utils.uuid();
         this.name = name;
@@ -17,8 +17,8 @@ class UserModel {
     @observable level = 0;
 }
 
-class LevelModel {
-    constructor(id, number, name, checkpoint) {
+export class LevelModel {
+    constructor(number, name, checkpoint) {
         this.id = Utils.uuid();
         this.number = number;
         this.name = name;
@@ -31,8 +31,8 @@ class LevelModel {
     checkpoint = 0;
 }
 
-class MilestoneModel {
-    constructor(id, checkpoint, rewards) {
+export class MilestoneModel {
+    constructor(checkpoint, rewards) {
         this.id = Utils.uuid();
         this.checkpoint = checkpoint;
         this.rewards = rewards;
@@ -43,8 +43,8 @@ class MilestoneModel {
     rewards = 0;    
 }
 
-class ItemModel {
-    constructor(id, name, description, usage_type, price, expired) {
+export class ItemModel {
+    constructor(name, description, usage_type, price, expired) {
         this.id = Utils.uuid();
         this.name = name;
         this.description = description;
@@ -61,8 +61,8 @@ class ItemModel {
     expired = false;
 }
 
-class PurchasedItemModel {
-    constructor(id, item, user) {
+export class PurchasedItemModel {
+    constructor(item, user) {
         this.id = Utils.uuid();
         this.item = item;
         this.user = user;
@@ -75,8 +75,8 @@ class PurchasedItemModel {
     @observable used_datetime = '';
 }
 
-class VoucherModel {
-    constructor(id, name, merchant, code, amount, type) {
+export class VoucherModel {
+    constructor(name, merchant, code, amount, type) {
         this.id = Utils.uuid();
         this.name = name;
         this.merchant = merchant;
@@ -95,8 +95,8 @@ class VoucherModel {
     @observable used_datetime = '';
 }
 
-class EventModel {
-    constructor(id, name, description, start_datetime, end_datetime, is_active) {
+export class EventModel {
+    constructor(name, description, start_datetime, end_datetime, is_active) {
         this.id = Utils.uuid();
         this.name = name;
         this.description = description;
