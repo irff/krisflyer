@@ -32,6 +32,15 @@ class UserStore {
     }
 
     @observable user = new UserModel(this, 'Tri Ahmad Irfan', 7192, 3675, 0);
+
+    @observable users = [
+					new UserModel(this, 'Shylla E. Pramadhani', 10921, 0, 0),
+					new UserModel(this, 'Michael Jones', 6781, 0, 0),
+					new UserModel(this, 'Tim Nguyen', 4512, 0, 0),
+					this.user,
+					new UserModel(this, 'Jane Doe', 2153, 0, 0),
+					new UserModel(this, 'Kim Seok-Hyeo', 4291, 0, 0)
+    ];
 }
 
 class LevelListStore {
@@ -237,28 +246,34 @@ class LeaderListStore {
 		this.rootStore = rootStore;
 	}
 
-	leaders = [
-		new LeaderModel(
-			new UserModel(this, 'Shylla E. Pramadhani', 10921, 0, 0),
-			new PurchasedItemListStore()
-		),
-		new LeaderModel(
-			new UserModel(this, 'Michael Jones', 6781, 0, 0),
-			new PurchasedItemListStore()
-		),
-		new LeaderModel(
-			new UserModel(this, 'Tim Nguyen', 4512, 0, 0),
-			new PurchasedItemListStore()
-		),
-		new LeaderModel(
-			new UserModel(this, 'Jane Doe', 2153, 0, 0),
-			new PurchasedItemListStore()
-		),
-		new LeaderModel(
-			new UserModel(this, 'Kim Seok-Hyeo', 4291, 0, 0),
-			new PurchasedItemListStore()
-		)
-	];
+	leaders = [];
+
+	constructLeaderboard() {
+
+		leaders = [
+			new LeaderModel(
+				this.rootStore.userStore.users[0],
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				this.rootStore.userStore.users[1],
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				this.rootStore.userStore.users[2],
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				this.rootStore.userStore.users[3],
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				this.rootStore.userStore.users[4],
+				new PurchasedItemListStore()
+			)
+		];
+		this.leaders = leaders;
+	}
 }
 
 class ProfileStore {
@@ -319,5 +334,6 @@ class RootStore {
 const singleton = new RootStore();
 
 singleton.profileStore.fetchData();
+singleton.leaderListStore.constructLeaderboard();
 
 export default singleton;

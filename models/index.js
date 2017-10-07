@@ -129,9 +129,9 @@ export class ItemModel {
 
     @action purchaseItem() {
         user = this.store.rootStore.userStore.user;
-        purchasedItems = this.store.purchasedItemListStore;
         if(user.points >= this.price) {
-            purchasedItems.addPurchasedItem(this);
+            this.store.rootStore.purchasedItemListStore.addPurchasedItem(this);
+            user.points -= this.price;
         } else {
             throw new Error('Insufficient points');
         }
@@ -140,9 +140,9 @@ export class ItemModel {
 
 export class PurchasedItemModel {
     constructor(item) {
-        this.purchase_date = Date.now();
-        this.expiry_date = Date.now();
-        this.expiry_date.setDate(expiry_date.getDate() + 30);
+        this.purchase_date = new Date();
+        this.expiry_date = new Date();
+        this.expiry_date.setDate(this.expiry_date.getDate() + 30);
         this.id = Utils.uuid();
         this.item = item;
     }
@@ -156,12 +156,12 @@ export class PurchasedItemModel {
     @observable invalidated_datetime = '';
 
     @computed get isExpired() {
-        return expiry_date < Date.now();
+        return expiry_date < new Date();
     }
 
     @action invalidateItem() {
         this.is_invalidated = true;
-        this.invalidated_datetime = Date.now();
+        this.invalidated_datetime = new Date(``);
     }
 
 }
