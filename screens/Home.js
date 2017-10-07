@@ -2,7 +2,10 @@ import React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
 import Expo, { Constants } from 'expo';
 import BaseScreen from '../components/BaseScreen';
+import { observer, inject } from 'mobx-react';
 
+@inject('store')
+@observer
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Home',
@@ -28,7 +31,17 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <BaseScreen>
-        <Text>This is the HomeScreen</Text>
+        <Text>This is the HomeScreen.</Text>
+        <Text>{this.props.store.counterStore.count}</Text>
+        <Text>{this.props.store.counterStore.isOdd}</Text>
+        <Button
+          onPress={() => this.props.store.counterStore.increment()}
+          title="+"
+        />
+        <Button
+          onPress={() => this.props.store.counterStore.increment(-1)}
+          title="-"
+        />
         <Button
           onPress={() => this.props.navigation.navigate('profile')}
           title="Go to profile"
