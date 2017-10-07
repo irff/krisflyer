@@ -1,9 +1,18 @@
 import React from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
-import theme from '../constants/theme';
-import { Flex, AlignCenter, AlignRight, ScreenTitle, Text, Bold } from '../components/common';
+import theme from '../constants/theme';import {
+  Flex,
+  AlignCenter,
+  AlignRight,
+  ScreenTitle,
+  Text,
+  Bold,
+  Header,
+  NavBar,
+  HeaderIcon,
+} from '../components/common';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
 
@@ -18,6 +27,10 @@ import IconLounge from '../assets/icons/lounge.png';
 import IconMiles from '../assets/icons/miles.png';
 import IconWait from '../assets/icons/wait.png';
 
+import ImgBanner1 from '../assets/banners/banner1.png';
+import ImgBanner2 from '../assets/banners/banner2.png';
+import ImgBanner3 from '../assets/banners/banner3.png';
+
 
 @inject('store')
 @observer
@@ -27,31 +40,11 @@ export default class HomeScreen extends React.Component {
     drawerIcon: null,
   };
 
-  curations = [
-    {
-      icon: IconBaggage,
-      text: 'Extra Baggage of 7 kgs',
-    },
-    {
-      icon: IconMiles,
-      text: '10% of Extra Miles',
-    },
-    {
-      icon: IconDiscount,
-      text: '5% Discount with Miles',
-    },
-    {
-      icon: IconBaggage,
-      text: 'Priority baggage handling',
-    },
-    {
-      icon: IconLounge,
-      text: 'Premium Lounge',
-    },
-
-  ];
+  banners = [ ImgBanner1, ImgBanner2, ImgBanner3 ];
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <BaseScreen>
         <ScrollView>
@@ -65,14 +58,17 @@ export default class HomeScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <HeaderIcon name="user" size={16} color={theme.color.white } />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
+                <HeaderIcon name="user" size={16} color={theme.color.white } />
+              </TouchableOpacity>
             </NavBar>
 
             <ScrollView horizontal>
-              <BannerCard />
-              <BannerCard />
-              <BannerCard />
-              <BannerCard />
+              {this.banners.map((banner, idx) =>
+                <BannerCard key={idx}>
+                  <BannerImg resizeMode="cover" source={banner} />
+                </BannerCard>
+              )}
             </ScrollView>
 
           </Header>
@@ -85,11 +81,15 @@ export default class HomeScreen extends React.Component {
 
             <HeadingNavigation>
               <Bold>Miles Progress</Bold>
-              <Text>See leaderboard ></Text>
+              <TouchableWithoutFeedback onPress={() => navigate('leaderboard')}>
+                <Text>See leaderboard ></Text>
+              </TouchableWithoutFeedback>
             </HeadingNavigation>
 
             <ProgressBar width={((25000-this.props.store.userStore.user.getRemainingMiles))/25000} />
-            <Text style={{ marginTop: 8 }}>{this.props.store.userStore.user.getRemainingMiles} more miles to unlock {this.props.store.userStore.user.nextLevelName}</Text>
+            <Text style={{ marginTop: 8 }}>
+              {this.props.store.userStore.user.getRemainingMiles} more miles to unlock{' '}
+              {this.props.store.userStore.user.nextLevelName}</Text>
           </Section>
 
           <Divider />
@@ -101,15 +101,23 @@ export default class HomeScreen extends React.Component {
 
             <HeadingNavigation>
               <Subheading>Redeem Points for More Fun</Subheading>
-              <Text>See all ></Text>
+              <TouchableWithoutFeedback onPress={() => navigate('items')}>
+                <Text>See all ></Text>
+              </TouchableWithoutFeedback>
             </HeadingNavigation>
 
             <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
               {this.props.store.itemListStore.items.map(item =>
-                <ItemCard key={item.id}>
-                  <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
-                  <Text numberOfLines={2} textAlign="center">{item.name}</Text>
-                </ItemCard>
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => navigate('itemDetails', { id: item.id })}
+                  activeOpacity={0.7}
+                >
+                  <ItemCard>
+                    <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
+                    <Text numberOfLines={2} textAlign="center">{item.name}</Text>
+                  </ItemCard>
+                </TouchableOpacity>
               )}
             </ScrollView>
 
@@ -163,11 +171,18 @@ const Section = styled.View`
 
 const BannerCard = styled.View`
   width: 280;
-  height: 96;
+  height: 102;
   margin-left: 16;
   border-radius: 4;
   elevation: 3;
   background-color: ${theme.color.white};
+  margin-bottom: 20;
+`;
+
+const BannerImg = styled.Image`
+  width: 280;
+  height: 102;
+  border-radius: 4;
 `;
 
 const ItemCard = styled.View`
@@ -184,20 +199,4 @@ const ItemCard = styled.View`
   margin-right: 4;
   margin-bottom: 4;
 
-`;
-
-const Header = styled(LinearGradient)`
-  padding-top: 20;
-  padding-bottom: 20;
-`;
-
-const NavBar = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 16;
-`;
-
-const HeaderIcon = styled(SimpleLineIcons)`
-  margin-left: 16;
-  margin-right: 16;
 `;

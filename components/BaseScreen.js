@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import styled from 'styled-components/native';
 import { Constants } from 'expo';
 import theme from '../constants/theme';
@@ -11,14 +11,13 @@ const StatusBarView = styled.View`
 
 const Screen = styled.View`
   flex: 1;
-  background-color: ${theme.color.white};
 `;
 
 export default (props) => (
-  <View style={{ flex: 1 }}>
+  <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
     <StatusBarView />
     <Screen>
       {props.children}
     </Screen>
-  </View>
+  </KeyboardAvoidingView>
 );
