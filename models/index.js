@@ -2,7 +2,8 @@ import { observable, action, computed } from 'mobx';
 import * as Utils from '../utils';
 
 export class UserModel {
-    constructor(name, miles, points, level) {
+    constructor(store, name, miles, points, level) {
+        this.store = store;
         this.id = Utils.uuid();
         this.name = name;
         this.miles = miles;
@@ -10,21 +11,78 @@ export class UserModel {
         this.level = level;
     }
 
+    store = '';
     id = '';
     name = '';
     @observable miles = 0;
     @observable points = 0;
     @observable level = 0;
+    @observable bonus_multiplier = 1;
+
+    @computed get getLevelName() {
+        levels = this.store.rootStore.levelListStore.levels;
+        console.log(`wkwwk ${levels[this.level].name}`);
+        return levels[this.level].name;
+    }
+
+    @computed get getRemainingMiles() {
+        next_level = this.level + 1;
+
+        console.log(`jebajeb`);
+        if(next_level <= 2) {
+            levels = this.store.rootStore.levelListStore.levels;
+            miles_required = levels[next_level].checkpoint - this.miles;
+            return miles_required;
+        } else {
+            return 0;
+        }
+    }
+
+    @action addMiles(value) {
+        this.miles += value;
+        levels = this.store.rootStore.levelListStore.levels;
+        current_miles = this.miles;
+        next_level = this.level + 1;
+        
+        if(next_level <= 2) {
+            if(current_miles >= levels[next_level].checkpoint) {
+                this.level = next_level;
+                this.bonus_multiplier += levels[next_level].bonus_multiplier;
+                console.log(`ADVANCING to ${next_level}`);
+            }
+            
+        }
+
+        console.log(`${this.level}, ${this.miles}, ${this.bonus_multiplier}`);
+    }
+
+    @action subtractMiles(value) {
+        if(this.miles >= value) {
+            this.miles -= value;            
+        }
+    }
+
+    @action addPoints(value) {
+        this.points += (this.bonus_multiplier * value)
+    }
+
+    @action subtractPoints(value) {
+        if(this.points >= value) {
+            this.points -= value;            
+        }
+    }
 }
 
 export class LevelModel {
-    constructor(number, name, checkpoint) {
+    constructor(number, name, checkpoint, bonus_multiplier) {
         this.id = Utils.uuid();
         this.number = number;
         this.name = name;
-        this.checkpoint = 0;
+        this.checkpoint = checkpoint;
+        this.bonus_multiplier = bonus_multiplier;
     }
 
+    bonus_multiplier = 0;
     id = '';
     number = 0;
     name = '';
@@ -44,7 +102,8 @@ export class MilestoneModel {
 }
 
 export class ItemModel {
-    constructor(name, description, usage_type, price, expired) {
+    constructor(store, name, description, usage_type, price, expired) {
+        this.store = store;
         this.id = Utils.uuid();
         this.name = name;
         this.description = description;
@@ -53,12 +112,17 @@ export class ItemModel {
         this.expired = expired;
     }
 
+    store = '';
     id = '';
     name = '';
     description = '';
     usage_type = '';
     price = 0;
     expired = false;
+
+    @action buyItem() {
+
+    }
 }
 
 export class PurchasedItemModel {

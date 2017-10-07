@@ -15,9 +15,14 @@ export default class ProfileScreen extends React.Component {
   render() {
     return (
       <BaseScreen>
-        <Text>This is the ProfileScreen WANJIR</Text>
         <Text>{this.props.store.counterStore.count}</Text>
         <Text>Hello {this.props.store.userStore.user.name}</Text>
+        <Text>Your level: {this.props.store.userStore.user.getLevelName}</Text>
+        <Text>Miles needed to next level: {this.props.store.userStore.user.getRemainingMiles}</Text>
+        <Button
+          onPress={() => this.props.store.userStore.user.addMiles(10000)}
+          title="Add 1000 miles"
+        />
         <Button
           onPress={() => this.props.navigation.navigate('home')}
           title="Go to home"
