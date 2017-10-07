@@ -1,4 +1,5 @@
 import { observable, action, computed } from 'mobx';
+import model from '../models';
 
 class CounterStore {
 	constructor(rootStore) {
@@ -14,6 +15,64 @@ class CounterStore {
 	@action increment(step = 1) {
 		this.count += step;
 	}
+}
+
+class UserStore {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+    }
+
+    @observable user = '';
+}
+
+class LevelListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable levels = [];
+}
+
+class MilestoneListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable milestones = [];
+}
+
+class ItemListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable items = [];
+}
+
+
+class PurchasedItemListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable purchased_items = [];
+}
+
+
+class VoucherListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable vouchers = [];
+}
+
+class EventListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable events = [];
 }
 
 class RootStore {
