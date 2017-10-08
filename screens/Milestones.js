@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import { ImageBackground, ScrollView } from 'react-native';
 
 import BaseScreen from '../components/BaseScreen';
 
@@ -9,9 +9,9 @@ export default class MilestonesScreen extends React.Component {
 	render() {
 		return (
 			<BaseScreen>
-				<ScrollView style={{ flex: 1 }} >
-					<Image source={MilestonesMock} resizeMode="contain" /> 
-				</ScrollView>
+				<ImageBackground source={MilestonesMock} resizeMode="cover" style={{
+					flex: 1,
+				}} />
 			</BaseScreen>
 		);
 	}

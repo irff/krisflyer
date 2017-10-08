@@ -51,53 +51,15 @@ export default class LeaderboardScreen extends React.Component {
             </NavBar>
 
             <LeaderboardContainer>
-              <LeaderboardEntry first>
-                <LeaderboardPlace>01</LeaderboardPlace>
-                <Flex>
-                  <LeaderboardName numberOfLines={1}>Shylla E. Pramadhani</LeaderboardName>
-                </Flex>
-                <LeaderboardMiles>78,109 miles</LeaderboardMiles>
-              </LeaderboardEntry>
-
-              <LeaderboardEntry>
-                <LeaderboardPlace>02</LeaderboardPlace>
-                <Flex>
-                  <LeaderboardName numberOfLines={1}>Shylla E. Pramadhani</LeaderboardName>
-                </Flex>
-                <LeaderboardMiles>78,109 miles</LeaderboardMiles>
-              </LeaderboardEntry>
-
-              <LeaderboardEntry>
-                <LeaderboardPlace>03</LeaderboardPlace>
-                <Flex>
-                  <LeaderboardName numberOfLines={1}>Shylla E. Pramadhani</LeaderboardName>
-                </Flex>
-                <LeaderboardMiles>78,109 miles</LeaderboardMiles>
-              </LeaderboardEntry>
-
-              <LeaderboardEntry>
-                <LeaderboardPlace>04</LeaderboardPlace>
-                <Flex>
-                  <LeaderboardName numberOfLines={1}>Shylla E. Pramadhani</LeaderboardName>
-                </Flex>
-                <LeaderboardMiles>78,109 miles</LeaderboardMiles>
-              </LeaderboardEntry>
-
-              <LeaderboardEntry>
-                <LeaderboardPlace>05</LeaderboardPlace>
-                <Flex>
-                  <LeaderboardName numberOfLines={1}>Shylla E. Pramadhani</LeaderboardName>
-                </Flex>
-                <LeaderboardMiles>78,109 miles</LeaderboardMiles>
-              </LeaderboardEntry>
-
-              <LeaderboardEntry>
-                <LeaderboardPlace>06</LeaderboardPlace>
-                <Flex>
-                  <LeaderboardName numberOfLines={1}>Shylla E. Pramadhani</LeaderboardName>
-                </Flex>
-                <LeaderboardMiles>78,109 miles</LeaderboardMiles>
-              </LeaderboardEntry>
+              {this.props.store.leaderListStore.leaders.map((entry, idx) =>
+                <LeaderboardEntry first={idx === 0} key={idx}>
+                  <LeaderboardPlace>{idx < 9 ? '0' : ''}{idx + 1}</LeaderboardPlace>
+                  <Flex>
+                    <LeaderboardName numberOfLines={1}>{entry.user.name}</LeaderboardName>
+                  </Flex>
+                  <LeaderboardMiles>{entry.user.miles} miles</LeaderboardMiles>
+                </LeaderboardEntry>
+              )}
             </LeaderboardContainer>
           </Header>
 
