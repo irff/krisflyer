@@ -58,15 +58,15 @@ export default class InventoryScreen extends React.Component {
             </HeadingNavigation>
 
             <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
-              {this.props.store.itemListStore.items.map(item =>
+              {this.props.store.purchasedItemListStore.purchased_items.filter(item => !item.is_invalidated).map(item =>
                 <TouchableOpacity
                   key={item.id}
-                  onPress={() => navigate('itemDetails', { id: item.id })}
+                  onPress={() => navigate('itemDetails', { id: item.item.id })}
                   activeOpacity={0.7}
                 >
                   <ItemCard>
                     <Image source={IconDiscount} style={{ width: 48 }} resizeMode="contain" />
-                    <Text numberOfLines={2} textAlign="center">{item.name}</Text>
+                    <Text numberOfLines={2} textAlign="center">{item.item.name}</Text>
                   </ItemCard>
                 </TouchableOpacity>
               )}
@@ -79,15 +79,15 @@ export default class InventoryScreen extends React.Component {
             </HeadingNavigation>
 
             <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
-              {this.props.store.itemListStore.items.map(item =>
+              {this.props.store.purchasedItemListStore.purchased_items.filter(item => item.is_invalidated).map(item =>
                 <TouchableOpacity
                   key={item.id}
-                  onPress={() => navigate('itemDetails', { id: item.id })}
+                  onPress={() => navigate('itemDetails', { id: item.item.id })}
                   activeOpacity={0.7}
                 >
                   <ItemCard>
                     <Image source={IconDiscount} style={{ width: 48 }} resizeMode="contain" />
-                    <Text numberOfLines={2} textAlign="center">{item.name}</Text>
+                    <Text numberOfLines={2} textAlign="center">{item.item.name}</Text>
                   </ItemCard>
                 </TouchableOpacity>
               )}

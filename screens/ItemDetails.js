@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, View, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { ScrollView, Image, View, TouchableWithoutFeedback, TouchableOpacity, Alert } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -33,6 +33,26 @@ export default class ItemDetailsScreen extends React.Component {
     super(props);
     const { id } = props.navigation.state.params;
     this.item = props.store.itemListStore.items.find(item => item.id === id);
+  }
+
+  confirm = () => {
+    Alert.alert(
+      'Redeem Points',
+      `Are you sure to redeem ${this.item.price} points for ${this.item.name}?`,
+      [
+        {
+          text: 'No',
+        },
+        {
+          text: 'Yes',
+          onPress: this.redeem,
+        }
+      ]
+    )
+  }
+
+  redeem = () => {
+    this.item.purchaseItem();
   }
 
   render() {
@@ -80,7 +100,7 @@ export default class ItemDetailsScreen extends React.Component {
         </ScrollView>
 
         <FooterContainer>
-          <Button title="Redeem" />
+          <Button title="Redeem" onPress={this.confirm} />
         </FooterContainer>
       </BaseScreen>
     );
