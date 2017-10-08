@@ -38,7 +38,7 @@ export default class LeaderboardScreen extends React.Component {
 
   state = {
     opened: -1,
-    tab: 'friends',
+    tab: 'global',
   }
 
   toggle = idx => () => {
