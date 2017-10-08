@@ -10,6 +10,28 @@ import {
 	EventModel
  } from '../models';
 
+globalObject = [
+	new ItemModel(this,
+		'5% extra miles',
+		'Get 5% extra miles for every flight that you fly',
+		"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
+		'MULTIPLER',
+		4375,
+		0,
+		'1 time'
+	),
+	new ItemModel(this,
+		'Access to exclusive lounges',
+		'Relax in comfort at more than 1,000 lounges around the world, even when you fly in Premium Economy or Economy Class with Singapore Airlines, SilkAir, Virgin Australia, Virgin Atlantic, Vistara, Star Alliance and Star Alliance Connecting Partner airlines',
+		"• Valid for one time use only\n• Valid for 1 month after purchase\n• Voucher cannot be exchanged with money \n• Only applicable for members with more than 35,000 miles \n• Exclusives for KFholder. Cannot be handed to any relatives (Might require ID)",
+		'ACCESS',
+		12500,
+		0,
+		'1 time'
+	)
+]
+
+
 class CounterStore {
 	constructor(rootStore) {
 		this.rootStore = rootStore;
@@ -261,9 +283,17 @@ class ItemListStore {
 class PurchasedItemListStore {
 	constructor(rootStore) {
 		this.rootStore = rootStore;
+		this.purchased_items = [];
 	}
 
 	@observable purchased_items = [];
+
+	constructInitialItems() {
+		item0 = this.rootStore.itemListStore.items[0];
+		item1 = this.rootStore.itemListStore.items[1];
+		this.purchased_items.push(new PurchasedItemModel(item0, true));
+		this.purchased_items.push(new PurchasedItemModel(item1, true));		
+	}
 
 	addPurchasedItem(item) {
 		this.purchased_items.push(new PurchasedItemModel(item));
@@ -299,16 +329,16 @@ class LeaderListStore {
 		leaders = [
 			new LeaderModel(
 				'Shylla E. Pramadhani',
-				100921,
+				29965,
 				new PurchasedItemListStore()
 			),
 			new LeaderModel(
-				'Michael Jones', 66781,
+				'Michael Jones', 12742,
 				new PurchasedItemListStore()
 			),
 			new LeaderModel(
 				'Tim Nguyen',
-				54912,
+				24912,
 				new PurchasedItemListStore()
 			),
 			new LeaderModel(
@@ -318,10 +348,36 @@ class LeaderListStore {
 			),
 			new LeaderModel(
 				'Kim Seok-Hyeo',
-				4291,
+				14291,
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				'Rini Tanyata',
+				23780,
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				'Joshua Arisio',
+				18172,
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				'Muhammad Anto',
+				22459,
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				'Satoshi Nakamoto',
+				14864,
+				new PurchasedItemListStore()
+			),
+			new LeaderModel(
+				'Muhammad Ridwan',
+				28712,
 				new PurchasedItemListStore()
 			)
 		];
+		leaders.sort((a,b) => {return b.miles - a.miles });
 		this.leaders = leaders;
 	}
 }
@@ -391,5 +447,5 @@ const singleton = new RootStore();
 
 singleton.profileStore.fetchData();
 singleton.leaderListStore.constructLeaderboard();
-
+singleton.purchasedItemListStore.constructInitialItems();
 export default singleton;

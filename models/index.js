@@ -157,12 +157,16 @@ export class ItemModel {
 }
 
 export class PurchasedItemModel {
-    constructor(item) {
+    constructor(item, invalidated=false) {
         this.purchase_date = new Date();
         this.expiry_date = new Date();
         this.expiry_date.setDate(this.expiry_date.getDate() + 30);
         this.id = Utils.uuid();
         this.item = item;
+
+        if(invalidated) {
+            this.invalidateItem();
+        }
     }
 
     id = '';
