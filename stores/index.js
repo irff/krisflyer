@@ -290,21 +290,21 @@ class PurchasedItemListStore {
 
 	constructInitialItems0() {
 		for(let i = 2; i < 15; i+=2) {
-			let item = this.rootStore.itemListStore.items[i];
+			const item = this.rootStore.itemListStore.items[i];
 			this.purchased_items.push(new PurchasedItemModel(item, true));
 		}
 	}
 
 	constructInitialItems1() {
 		for(let i = 3; i < 19; i+=3) {
-			let item = this.rootStore.itemListStore.items[i];
+			const item = this.rootStore.itemListStore.items[i];
 			this.purchased_items.push(new PurchasedItemModel(item, true));
 		}
 	}
 
 	constructInitialItems() {
-		let item0 = this.rootStore.itemListStore.items[0];
-		let item1 = this.rootStore.itemListStore.items[1];
+		const item0 = this.rootStore.itemListStore.items[0];
+		const item1 = this.rootStore.itemListStore.items[1];
 		this.purchased_items.push(new PurchasedItemModel(item0, true));
 		this.purchased_items.push(new PurchasedItemModel(item1, true));		
 	}
