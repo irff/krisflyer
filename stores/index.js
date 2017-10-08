@@ -31,7 +31,7 @@ class UserStore {
         this.rootStore = rootStore;
     }
 
-    @observable user = new UserModel(this, 'Tri Ahmad Irfan', 7192, 3675, 0);
+    @observable user = new UserModel(this, 'Loading...', 0, 0, 0);
 
     @observable users = [
 					new UserModel(this, 'Shylla E. Pramadhani', 10921, 0, 0),
@@ -41,6 +41,14 @@ class UserStore {
 					new UserModel(this, 'Jane Doe', 2153, 0, 0),
 					new UserModel(this, 'Kim Seok-Hyeo', 4291, 0, 0)
     ];
+
+    populateData() {
+    	profile = this.rootStore.profileStore.profile;
+    	this.user.name = `${profile.firstName} ${profile.lastName}`;
+    	this.user.miles = 26028;
+    	this.user.points = 42068;
+    	this.user.level = 1;
+    }
 }
 
 class LevelListStore {
@@ -50,8 +58,8 @@ class LevelListStore {
 
 	@observable levels = [
 		new LevelModel(0, 'KrisFlyer', 0, 0),
-		new LevelModel(1, 'Kris Elite Silver', 25000, 0.05),
-		new LevelModel(2, 'Kris Elite Gold', 50000, 0.10)
+		new LevelModel(1, 'KrisFlyer Elite Silver', 25000, 0.05),
+		new LevelModel(2, 'KrisFlyer Elite Gold', 50000, 0.10)
 	];
 }
 
@@ -306,6 +314,8 @@ class ProfileStore {
 		if(response_json.status == "SUCCESS") {
 			this.profile = response_json.response;
 			this.loaded = true;
+			this.rootStore.userStore.populateData();
+
 		} else {
 			throw Error('Error fetching profile from server');
 		}
