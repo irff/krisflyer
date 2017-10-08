@@ -178,7 +178,7 @@ export class PurchasedItemModel {
     @observable invalidated_datetime = '';
 
     @computed get isExpired() {
-        return expiry_date < new Date();
+        return this.expiry_date < new Date();
     }
 
     @action invalidateItem() {

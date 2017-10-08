@@ -288,9 +288,23 @@ class PurchasedItemListStore {
 
 	@observable purchased_items = [];
 
+	constructInitialItems0() {
+		for(let i = 2; i < 15; i+=2) {
+			let item = this.rootStore.itemListStore.items[i];
+			this.purchased_items.push(new PurchasedItemModel(item, true));
+		}
+	}
+
+	constructInitialItems1() {
+		for(let i = 3; i < 19; i+=3) {
+			let item = this.rootStore.itemListStore.items[i];
+			this.purchased_items.push(new PurchasedItemModel(item, true));
+		}
+	}
+
 	constructInitialItems() {
-		item0 = this.rootStore.itemListStore.items[0];
-		item1 = this.rootStore.itemListStore.items[1];
+		let item0 = this.rootStore.itemListStore.items[0];
+		let item1 = this.rootStore.itemListStore.items[1];
 		this.purchased_items.push(new PurchasedItemModel(item0, true));
 		this.purchased_items.push(new PurchasedItemModel(item1, true));		
 	}
@@ -330,16 +344,16 @@ class LeaderListStore {
 			new LeaderModel(
 				'Shylla E. Pramadhani',
 				29965,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Michael Jones', 12742,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Tim Nguyen',
 				24912,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				this.rootStore.userStore.user.name,
@@ -349,35 +363,37 @@ class LeaderListStore {
 			new LeaderModel(
 				'Kim Seok-Hyeo',
 				14291,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Rini Tanyata',
 				23780,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Joshua Arisio',
 				18172,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Muhammad Anto',
 				22459,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Satoshi Nakamoto',
 				14864,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Muhammad Ridwan',
 				28712,
-				new PurchasedItemListStore()
+				new PurchasedItemListStore(this.rootStore)
 			)
 		];
 		leaders.sort((a,b) => {return b.miles - a.miles });
+		leaders[0].purchased_item_list.constructInitialItems0();
+		leaders[1].purchased_item_list.constructInitialItems1();
 		this.leaders = leaders;
 	}
 }
@@ -446,6 +462,6 @@ class RootStore {
 const singleton = new RootStore();
 
 singleton.profileStore.fetchData();
-singleton.leaderListStore.constructLeaderboard();
 singleton.purchasedItemListStore.constructInitialItems();
+singleton.leaderListStore.constructLeaderboard();
 export default singleton;
