@@ -79,7 +79,7 @@ export default class HomeScreen extends React.Component {
 
           <Section>
             <Heading>{this.props.store.userStore.user.name}</Heading>
-            <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.nextLevelName}</Text>
+            <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.getLevelName}</Text>
 
             <BorderDivider />
 

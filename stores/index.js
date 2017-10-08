@@ -344,7 +344,7 @@ class ProfileStore {
 			this.rootStore.userStore.populateData();
 
 		} else {
-			throw Error('Error fetching profile from server');
+			throw Error('No internet connection! Error fetching profile from server.');
 		}
 
 	}
