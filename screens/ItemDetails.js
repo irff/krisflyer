@@ -53,6 +53,7 @@ export default class ItemDetailsScreen extends React.Component {
 
   redeem = () => {
     this.item.purchaseItem();
+    this.props.navigation.navigate('inventory');
   }
 
   render() {

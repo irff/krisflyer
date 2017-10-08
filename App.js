@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
-import { DrawerNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import { Provider } from 'mobx-react';
 import { Font } from 'expo';
 import store from './stores';
@@ -10,6 +10,8 @@ import ItemDetailsScreen from './screens/ItemDetails';
 import ItemsScreen from './screens/Items';
 import InventoryScreen from './screens/Inventory';
 import LeaderboardScreen from './screens/Leaderboard';
+import QuestsScreen from './screens/Quests';
+import MilestonesScreen from './screens/Milestones';
 
 export default class App extends React.Component {
   state = {
@@ -38,7 +40,7 @@ export default class App extends React.Component {
 }
 
 
-const Navigator = DrawerNavigator({
+const Navigator = StackNavigator({
   home: {
     screen: HomeScreen,
   },
@@ -57,8 +59,15 @@ const Navigator = DrawerNavigator({
   profile: {
     screen: ProfileScreen,
   },
+  quests: {
+    screen: QuestsScreen,
+  },
+  milestones: {
+    screen: MilestonesScreen,
+  },
 }, {
   initialRouteName: 'home',
+  headerMode: 'none',
 });
 
 const styles = StyleSheet.create({

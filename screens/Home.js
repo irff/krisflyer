@@ -76,6 +76,9 @@ export default class HomeScreen extends React.Component {
           <Section>
             <Heading>{this.props.store.userStore.user.name}</Heading>
             <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.getLevelName}</Text>
+            <TouchableWithoutFeedback onPress={() => navigate('milestones')}>
+              <Link>Learn more</Link>
+            </TouchableWithoutFeedback>
 
             <BorderDivider />
 
@@ -124,7 +127,7 @@ export default class HomeScreen extends React.Component {
             <BorderDivider />
 
             <BoostText>Boost your points by completing quests!</BoostText>
-            <Button title="I want quests!" />
+            <Button title="Explore Quests" onPress={() => navigate('quests')} />
 
           </Section>
 
@@ -185,6 +188,10 @@ const BannerImg = styled.Image`
   border-radius: 4;
 `;
 
+const Link = styled(Text)`
+  text-decoration-line: underline;
+`;
+
 const ItemCard = styled.View`
   background-color: ${theme.color.white};
   padding-top: 8;
@@ -198,5 +205,4 @@ const ItemCard = styled.View`
   margin-left: 4;
   margin-right: 4;
   margin-bottom: 4;
-
 `;
