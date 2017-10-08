@@ -88,7 +88,7 @@ class ItemListStore {
 			'Get 5% extra miles for every flight that you fly',
 			"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
 			'MULTIPLER',
-			0,
+			4375,
 			'1 time'
 		),
 		new ItemModel(this,
