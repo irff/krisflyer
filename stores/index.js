@@ -26,15 +26,6 @@ class CounterStore {
 	}
 }
 
-let userAutorun = () => {
-	try {
-		console.log('updating leaderboard');
-        this.rootStore.leaderListStore.constructLeaderboard();	
-	} catch(e) {
-		console.log(e.message);
-	}
-}
-
 class UserStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
@@ -375,8 +366,6 @@ class ProfileStore {
 			this.loaded = true;
 			this.rootStore.userStore.populateData();
 		}
-
-		userAutorun();
 	}
 }
 

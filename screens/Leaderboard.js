@@ -29,6 +29,14 @@ import IconDiscount from '../assets/icons/discount.png';
 @inject('store')
 @observer
 export default class LeaderboardScreen extends React.Component {
+
+  componentDidMount() {
+    console.log('enter leaderboard');
+    console.log('updating leaderboard');
+
+    this.props.store.leaderListStore.constructLeaderboard();
+  }
+
   render() {
     const { goBack, navigate } = this.props.navigation;
 
@@ -55,9 +63,9 @@ export default class LeaderboardScreen extends React.Component {
                 <LeaderboardEntry first={idx === 0} key={idx}>
                   <LeaderboardPlace>{idx < 9 ? '0' : ''}{idx + 1}</LeaderboardPlace>
                   <Flex>
-                    <LeaderboardName numberOfLines={1}>{entry.user.name}</LeaderboardName>
+                    <LeaderboardName numberOfLines={1}>{entry.name}</LeaderboardName>
                   </Flex>
-                  <LeaderboardMiles>{entry.user.miles} miles</LeaderboardMiles>
+                  <LeaderboardMiles>{entry.miles} miles</LeaderboardMiles>
                 </LeaderboardEntry>
               )}
             </LeaderboardContainer>
