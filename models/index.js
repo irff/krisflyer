@@ -109,7 +109,7 @@ export class MilestoneModel {
 }
 
 export class ItemModel {
-    constructor(store, name, description, terms, usage_type, price, expired) {
+    constructor(store, name, description, terms, usage_type, price, miles_required, expired) {
         this.store = store;
         this.id = Utils.uuid();
         this.name = name;
@@ -117,6 +117,7 @@ export class ItemModel {
         this.terms = terms;
         this.usage_type = usage_type;
         this.price = price;
+        this.miles_required = miles_required;
         this.expired = expired;
     }
 
@@ -127,15 +128,30 @@ export class ItemModel {
     terms = '';
     usage_type = '';
     price = 0;
+    miles_required = 0;
     expired = false;
+
+    @computed get isMilesEnough() {
+        user = this.store.rootStore.userStore.user;
+        return user.miles >= this.miles_required;
+    }
+
+    @computed get isPointsEnough() {
+        user = this.store.rootStore.userStore.user;
+        return user.points >= this.price;
+    }
 
     @action purchaseItem() {
         user = this.store.rootStore.userStore.user;
-        if(user.points >= this.price) {
-            this.store.rootStore.purchasedItemListStore.addPurchasedItem(this);
-            user.points -= this.price;
+        if(this.isMilesEnough) {
+            if(this.isPointsEnough) {
+                this.store.rootStore.purchasedItemListStore.addPurchasedItem(this);
+                user.points -= this.price;
+            } else {
+                throw new Error('You don\'t have enough points to redeem this item');
+            }        
         } else {
-            throw new Error('Insufficient points');
+            throw new Error('You don\'t have enough miles to redeem this item');
         }
     }
 }

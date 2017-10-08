@@ -89,6 +89,7 @@ class ItemListStore {
 			"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
 			'MULTIPLER',
 			4375,
+			0,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -97,6 +98,7 @@ class ItemListStore {
 			"• Valid for one time use only\n• Valid for 1 month after purchase\n• Voucher cannot be exchanged with money \n• Only applicable for members with more than 35,000 miles \n• Exclusives for KFholder. Cannot be handed to any relatives (Might require ID)",
 			'ACCESS',
 			12500,
+			0,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -105,6 +107,7 @@ class ItemListStore {
 			"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
 			'ACCESS',
 			9375,
+			35000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -113,6 +116,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'MULTIPLER',
 			6250,
+			15000,
 			'1 year'
 		),
 		new ItemModel(this,
@@ -121,6 +125,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'PRIORITY',
 			10000,
+			15000,
 			'1 year'
 		),
 		new ItemModel(this,
@@ -129,6 +134,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'PRIORITY',
 			12500,
+			15000,
 			'1 year'
 		),
 		new ItemModel(this,
@@ -137,6 +143,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'PRIORITY',
 			9375,
+			40000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -145,6 +152,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'PRIORITY',
 			6250,
+			35000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -153,6 +161,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'PRIORITY',
 			8750,
+			40000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -161,6 +170,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'ACCESS',
 			18750,
+			40000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -169,6 +179,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'ACCESS',
 			20000,
+			40000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -176,7 +187,8 @@ class ItemListStore {
 			'Upgrade from economy to premium economy, premium economy to business, etc.',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'UPGRADE',
-			30000,
+			15000,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -185,6 +197,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			10000,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -193,6 +206,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			1875,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -201,6 +215,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			3125,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -209,6 +224,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			5000,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -217,6 +233,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			2500,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -225,6 +242,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			10625,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -233,6 +251,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			7500,
+			20000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -241,6 +260,7 @@ class ItemListStore {
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
 			'VOUCHER',
 			4875,
+			20000,
 			'1 time'
 		),
 	];
@@ -344,7 +364,12 @@ class ProfileStore {
 			this.rootStore.userStore.populateData();
 
 		} else {
-			throw Error('No internet connection! Error fetching profile from server.');
+			this.profile = {
+				firstName : 'James',
+				lastName : 'Morrison'
+			};
+			this.loaded = true;
+			this.rootStore.userStore.populateData();
 		}
 
 	}
