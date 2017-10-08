@@ -78,7 +78,9 @@ export default class ItemDetailsScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <HeaderIcon name="user" size={16} color={theme.color.white } />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
+                <HeaderIcon name="user" size={16} color={theme.color.white } />
+              </TouchableOpacity>
             </NavBar>
           </Header>
 
@@ -88,7 +90,7 @@ export default class ItemDetailsScreen extends React.Component {
               <Flex style={{ marginLeft: 24 }}>
                 <Text>Buy Items</Text>
                 <BigBold>{this.item.name}</BigBold>
-                <Text>{this.item.price} points</Text>
+                <Text>{this.item.price} points · {this.item.miles_required} miles</Text>
               </Flex>
             </Row>
 

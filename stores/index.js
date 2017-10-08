@@ -111,7 +111,7 @@ class ItemListStore {
 			"• Valid for one time use only\n• Valid for 1 month after purchase\n• Voucher cannot be exchanged with money \n• Only applicable for members with more than 35,000 miles \n• Exclusives for KFholder. Cannot be handed to any relatives (Might require ID)",
 			'ACCESS',
 			12500,
-			0,
+			35000,
 			'1 time'
 		),
 		new ItemModel(this,
@@ -120,7 +120,7 @@ class ItemListStore {
 			"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
 			'ACCESS',
 			9375,
-			35000,
+			0,
 			'1 time'
 		),
 		new ItemModel(this,

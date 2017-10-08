@@ -48,7 +48,9 @@ export default class ItemsScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <HeaderIcon name="user" size={16} color={theme.color.white } />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
+                <HeaderIcon name="user" size={16} color={theme.color.white } />
+              </TouchableOpacity>
             </NavBar>
 
             <HeaderInfoContainer style={{ marginTop: 32, marginBottom: 44 }}>
@@ -87,7 +89,7 @@ export default class ItemsScreen extends React.Component {
                   <ItemCardImage source={IconDiscount} />
                   <ItemCardDescription item={item}>
                     <Bold style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.name}</Bold>
-                    <Text style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.price} points</Text>
+                    <Text numberOfLines={1} style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.price} points · {item.miles_required} miles</Text>
                   </ItemCardDescription>
                   <ItemCardArrow item={item}>
                     <Ionicons name="md-arrow-forward" color={theme.color.yellowLight} size={24} />
@@ -163,6 +165,7 @@ const ItemCardImage = styled.Image`
 const ItemCardDescription = styled.View`
   margin-top: 24;
   margin-bottom: 24;
+  margin-right: 8;
   flex: 1;
 `;
 

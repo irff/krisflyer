@@ -47,7 +47,9 @@ export default class InventoryScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <HeaderIcon name="user" size={16} color={theme.color.white } />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
+                <HeaderIcon name="user" size={16} color={theme.color.white } />
+              </TouchableOpacity>
             </NavBar>
           </Header>
 
