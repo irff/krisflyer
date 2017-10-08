@@ -52,8 +52,12 @@ export default class ItemDetailsScreen extends React.Component {
   }
 
   redeem = () => {
-    this.item.purchaseItem();
-    this.props.navigation.navigate('inventory');
+    try {
+      this.item.purchaseItem();
+      this.props.navigation.navigate('inventory');      
+    } catch (e) {
+      Alert.alert('Redeem failed', e.message);
+    }
   }
 
   render() {
