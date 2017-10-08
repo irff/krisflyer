@@ -223,11 +223,13 @@ export class EventModel {
 
 
 export class LeaderModel {
-    constructor(user, purchased_item_list) {
-        this.user = user;
+    constructor(name, miles, purchased_item_list) {
+        this.name = name,
+        this.miles = miles,
         this.purchased_item_list = purchased_item_list;
     }
 
-    user = '';
+    name = '';
+    miles = 0;
     purchased_item_list = '';
 }

@@ -75,7 +75,7 @@ export default class HomeScreen extends React.Component {
 
           <Section>
             <Heading>{this.props.store.userStore.user.name}</Heading>
-            <Text><Bold>{this.props.store.userStore.user.miles}</Bold> points • {this.props.store.userStore.user.getLevelName}</Text>
+            <Text><Bold>{this.props.store.userStore.user.miles}</Bold> miles • {this.props.store.userStore.user.getLevelName}</Text>
             <TouchableWithoutFeedback onPress={() => navigate('milestones')}>
               <Link>Learn more</Link>
             </TouchableWithoutFeedback>

@@ -85,11 +85,11 @@ export default class ItemsScreen extends React.Component {
               >
                 <ItemCard>
                   <ItemCardImage source={IconDiscount} />
-                  <ItemCardDescription>
-                    <Bold>{item.name}</Bold>
-                    <Text>{item.price} points</Text>
+                  <ItemCardDescription item={item}>
+                    <Bold style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.name}</Bold>
+                    <Text style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.price} points</Text>
                   </ItemCardDescription>
-                  <ItemCardArrow>
+                  <ItemCardArrow item={item}>
                     <Ionicons name="md-arrow-forward" color={theme.color.yellowLight} size={24} />
                   </ItemCardArrow>
                 </ItemCard>
@@ -167,7 +167,7 @@ const ItemCardDescription = styled.View`
 `;
 
 const ItemCardArrow = styled.View`
-  background-color: ${theme.color.yellow};
+  background-color: ${props => props.item.isMilesEnough ? theme.color.yellow : theme.color.lightGray };
   padding-left: 16;
   padding-right: 16;
   align-items: center;

@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, autorun } from 'mobx';
 import {
 	LeaderModel,
 	UserModel,
@@ -26,21 +26,21 @@ class CounterStore {
 	}
 }
 
+let userAutorun = () => {
+	try {
+		console.log('updating leaderboard');
+        this.rootStore.leaderListStore.constructLeaderboard();	
+	} catch(e) {
+		console.log(e.message);
+	}
+}
+
 class UserStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
     @observable user = new UserModel(this, 'Loading...', 0, 0, 0);
-
-    @observable users = [
-					new UserModel(this, 'Shylla E. Pramadhani', 10921, 0, 0),
-					new UserModel(this, 'Michael Jones', 6781, 0, 0),
-					new UserModel(this, 'Tim Nguyen', 4512, 0, 0),
-					this.user,
-					new UserModel(this, 'Jane Doe', 2153, 0, 0),
-					new UserModel(this, 'Kim Seok-Hyeo', 4291, 0, 0)
-    ];
 
     populateData() {
     	profile = this.rootStore.profileStore.profile;
@@ -301,29 +301,33 @@ class LeaderListStore {
 		this.rootStore = rootStore;
 	}
 
-	leaders = [];
+	@observable leaders = [];
 
 	constructLeaderboard() {
 
 		leaders = [
 			new LeaderModel(
-				this.rootStore.userStore.users[0],
+				'Shylla E. Pramadhani',
+				100921,
 				new PurchasedItemListStore()
 			),
 			new LeaderModel(
-				this.rootStore.userStore.users[1],
+				'Michael Jones', 66781,
 				new PurchasedItemListStore()
 			),
 			new LeaderModel(
-				this.rootStore.userStore.users[2],
+				'Tim Nguyen',
+				54912,
 				new PurchasedItemListStore()
 			),
 			new LeaderModel(
-				this.rootStore.userStore.users[3],
-				new PurchasedItemListStore()
+				this.rootStore.userStore.user.name,
+				this.rootStore.userStore.user.miles,
+				this.rootStore.purchasedItemListStore
 			),
 			new LeaderModel(
-				this.rootStore.userStore.users[4],
+				'Kim Seok-Hyeo',
+				4291,
 				new PurchasedItemListStore()
 			)
 		];
@@ -372,6 +376,7 @@ class ProfileStore {
 			this.rootStore.userStore.populateData();
 		}
 
+		userAutorun();
 	}
 }
 

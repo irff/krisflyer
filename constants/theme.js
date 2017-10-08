@@ -2,6 +2,7 @@ export default {
 	color: {
 		statusBar: '#333',
 		white: '#FFF',
+		lightGray: '#aaa',
 		black: '#272C33',
 		blue: '#274378',
 		yellow: '#FFB945',
