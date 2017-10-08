@@ -109,11 +109,12 @@ export class MilestoneModel {
 }
 
 export class ItemModel {
-    constructor(store, name, description, usage_type, price, expired) {
+    constructor(store, name, description, terms, usage_type, price, expired) {
         this.store = store;
         this.id = Utils.uuid();
         this.name = name;
         this.description = description;
+        this.terms = terms;
         this.usage_type = usage_type;
         this.price = price;
         this.expired = expired;
@@ -122,7 +123,8 @@ export class ItemModel {
     store = '';
     id = '';
     name = '';
-    description = '';
+    description = ''; 
+    terms = '';
     usage_type = '';
     price = 0;
     expired = false;
