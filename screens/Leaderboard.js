@@ -111,7 +111,8 @@ export default class LeaderboardScreen extends React.Component {
                 <HeaderIcon name="user" size={16} color={theme.color.white } />
               </TouchableOpacity>
             </NavBar>
-
+          </Header>
+          <OverlapingContainer>
             <Row>
               <Flex style={{ alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => this.setState({ tab: 'global' })}>
@@ -133,9 +134,8 @@ export default class LeaderboardScreen extends React.Component {
 
             {this.state.tab === 'global' && this.renderGlobal()}
             {this.state.tab === 'friends' && this.renderFriends()}
-          </Header>
 
-          <Container />
+          </OverlapingContainer>         
         </ScrollView>
       </BaseScreen>
     );
@@ -152,6 +152,7 @@ const LeaderboardContainer = styled.View`
   z-index: 1;
   border-radius: 4;
   margin-top: 32;
+  margin-bottom: 32;
   margin-left: 32;
   margin-right: 32;
   padding-top: 20;
@@ -209,5 +210,10 @@ const OopsText = styled(Text)`
   font-size: 24;
   margin-top: 84;
   margin-bottom: 84;
+`;
+
+const OverlapingContainer = styled.ScrollView`
+  margin-top: -144;
+  padding-top: 12;
 `;
 
