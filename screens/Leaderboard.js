@@ -25,6 +25,7 @@ import ProgressBar from '../components/ProgressBar';
 import Button from '../components/Button';
 
 import IconBaggage from '../assets/icons/baggage.png';
+import IlluEmptyState from '../assets/illustrations/ilEmptystate.png';
 
 @inject('store')
 @observer
@@ -77,6 +78,7 @@ export default class LeaderboardScreen extends React.Component {
 
   renderFriends = () => (
     <LeaderboardContainer>
+      <EmptyStateImage source={IlluEmptyState} resizeMode="contain" />
       <OopsText textAlign="center">Oops... None of your friends are here yet. Invite them for more fun!</OopsText>
       <TouchableOpacity activeOpacity={0.7}>
         <FacebookInviteButton>
@@ -206,10 +208,15 @@ const FacebookInviteButton = styled.View`
   border-radius: 4;
 `;
 
+const EmptyStateImage = styled.Image`
+  margin-top: 48;
+  width: 100%;
+`;
+
 const OopsText = styled(Text)`
   font-size: 24;
-  margin-top: 84;
-  margin-bottom: 84;
+  margin-top: 40;
+  margin-bottom: 40;
   text-align: center;
 `;
 
