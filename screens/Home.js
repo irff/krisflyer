@@ -2,7 +2,9 @@ import React from 'react';
 import { ScrollView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
-import theme from '../constants/theme';import {
+import theme from '../constants/theme';
+import {
+  Row, 
   Flex,
   AlignCenter,
   AlignRight,
@@ -13,13 +15,14 @@ import theme from '../constants/theme';import {
   NavBar,
   HeaderIcon,
 } from '../components/common';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { formatNumber } from '../utils';
+import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
 
 import BaseScreen from '../components/BaseScreen';
 import Divider, { BorderDivider } from '../components/Divider';
 import ProgressBar from '../components/ProgressBar';
-import Button from '../components/Button';
+import Button, { SecondaryButton } from '../components/Button';
 
 import IconBaggage from '../assets/icons/baggage.png';
 import IconDiscount from '../assets/icons/discount.png';
@@ -44,6 +47,7 @@ export default class HomeScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { user } = this.props.store.userStore;
 
     return (
       <BaseScreen>
@@ -74,31 +78,72 @@ export default class HomeScreen extends React.Component {
           </Header>
 
           <Section>
-            <Heading>{this.props.store.userStore.user.name}</Heading>
-            <Text><Bold>{this.props.store.userStore.user.miles}</Bold> miles • {this.props.store.userStore.user.getLevelName}</Text>
-            <TouchableWithoutFeedback onPress={() => navigate('milestones')}>
-              <Link>Learn more</Link>
-            </TouchableWithoutFeedback>
-
-            <BorderDivider />
-
-            <HeadingNavigation>
-              <Bold>Miles Progress</Bold>
-              <TouchableWithoutFeedback onPress={() => navigate('leaderboard')}>
-                <Text>See leaderboard ></Text>
-              </TouchableWithoutFeedback>
-            </HeadingNavigation>
-
-            <ProgressBar width={((25000-this.props.store.userStore.user.getRemainingMiles))/25000} />
-            <Text style={{ marginTop: 8 }}>
-              {this.props.store.userStore.user.getRemainingMiles} more miles to unlock{' '}
-              {this.props.store.userStore.user.nextLevelName}</Text>
+            <NameText>{user.name}</NameText>
+            <Row>
+              <Flex>
+                <UserInfoTop>YOU'VE REACHED</UserInfoTop>
+                <ValueText>{formatNumber(user.miles)}</ValueText>
+                <UserInfoBottom>MILES</UserInfoBottom>
+              </Flex>
+              <Flex>
+                <UserInfoTop>YOU OWN</UserInfoTop>
+                <ValueText>{formatNumber(user.points)}</ValueText>
+                <UserInfoBottom>POINTS</UserInfoBottom>
+              </Flex>
+            </Row>
           </Section>
 
           <Divider />
 
           <Section>
-            <PointsText>You have <BigBold>{this.props.store.userStore.user.points}</BigBold> points</PointsText>
+            <SectionHead>
+              <SectionTitle>Your Miles</SectionTitle>
+              <Ionicons name="ios-arrow-up" size={24} color={theme.color.gray} />
+            </SectionHead>
+
+            <HeadingNavigation>
+              <Bold>{user.getLevelName}</Bold>
+              <Text><Bold style={{ color: theme.color.yellow }}>{formatNumber(user.miles)}</Bold>
+              /{formatNumber(user.miles + user.getRemainingMiles)}</Text>
+            </HeadingNavigation>
+
+            <ProgressBar width={((25000-user.getRemainingMiles))/25000} />
+            <Text style={{ marginTop: 8, fontSize: 12 }}>
+              <Bold>{formatNumber(user.getRemainingMiles)}</Bold> more to be{' '}
+              {user.nextLevelName} & unlock more items
+            </Text>
+
+            <SecondaryButton
+              title="Learn more about Milestones & Bonus"
+              style={{ marginTop: 16 }}
+              onPress={() => navigate('milestones')}
+            />
+
+            <BorderDivider />
+
+            <Text>You are ranked the <YellowNum>{formatNumber(1560)}</YellowNum>th on global leaderboard</Text>
+
+            <SecondaryButton
+              title="See Full Leaderboard"
+              style={{ marginTop: 16 }}
+              onPress={() => navigate('leaderboard')}
+            />
+
+          </Section>
+
+          <Divider />
+
+          <Section>
+            <SectionHead>
+              <SectionTitle>Your Points</SectionTitle>
+              <Ionicons name="ios-arrow-up" size={24} color={theme.color.gray} />
+            </SectionHead>
+            <Text>You own <YellowNum>{formatNumber(user.points)}</YellowNum> redeemable points</Text>
+
+            <BorderDivider />
+
+            <BoostText>Boost your points by completing quests!</BoostText>
+            <Button title="Explore Quests" onPress={() => navigate('quests')} />
 
             <BorderDivider />
 
@@ -109,25 +154,24 @@ export default class HomeScreen extends React.Component {
               </TouchableWithoutFeedback>
             </HeadingNavigation>
 
-            <ScrollView horizontal style={{ marginLeft: -24, marginRight: -24 }}>
+            <ScrollView
+              horizontal
+              style={{ marginLeft: -32, marginRight: -32 }}
+              contentContainerStyle={{ alignItems: 'stretch', flexDirection: 'row' }}
+            >
+              <ScrollPadding />
               {this.props.store.itemListStore.items.map(item =>
-                <TouchableOpacity
+                <ItemCard
                   key={item.id}
                   onPress={() => navigate('itemDetails', { id: item.id })}
                   activeOpacity={0.7}
                 >
-                  <ItemCard>
-                    <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
-                    <Text numberOfLines={2} textAlign="center">{item.name}</Text>
-                  </ItemCard>
-                </TouchableOpacity>
+                  <Image source={IconBaggage} style={{ width: 48 }} resizeMode="contain" />
+                  <Text numberOfLines={2} style={{ textAlign: 'center' }}>{item.name}</Text>
+                </ItemCard>
               )}
+              <ScrollPadding />
             </ScrollView>
-
-            <BorderDivider />
-
-            <BoostText>Boost your points by completing quests!</BoostText>
-            <Button title="Explore Quests" onPress={() => navigate('quests')} />
 
           </Section>
 
@@ -137,13 +181,24 @@ export default class HomeScreen extends React.Component {
   }
 }
 
+const SectionHead = styled(Row)`
+  padding-bottom: 20;
+`;
+
+const SectionTitle = styled(Text)`
+  font-size: 26;
+  flex: 1;
+`;
+
 const HeadingNavigation = styled.View`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 16;
 `;
 
-const Heading = styled(Text)`
+const NameText = styled(Bold)`
+  text-align: center;
+  margin-bottom: 20;
   font-size: 28;
 `;
 
@@ -192,7 +247,7 @@ const Link = styled(Text)`
   text-decoration-line: underline;
 `;
 
-const ItemCard = styled.View`
+const ItemCard = styled.TouchableOpacity`
   background-color: ${theme.color.white};
   padding-top: 8;
   padding-bottom: 16;
@@ -205,4 +260,29 @@ const ItemCard = styled.View`
   margin-left: 4;
   margin-right: 4;
   margin-bottom: 4;
+`;
+
+const UserInfoTop = styled(Text)`
+  text-align: center;
+  font-size: 12;
+`;
+
+const ValueText = styled(Bold)`
+  font-size: 24;
+  text-align: center;
+`;
+
+const UserInfoBottom = styled(Bold)`
+  text-align: center;
+  font-size: 12;
+`;
+
+const YellowNum = styled(Bold)`
+  font-size: 18;
+  color: ${theme.color.yellow};
+`;
+
+const ScrollPadding = styled.View`
+  width: 32;
+  background-color: transparent;
 `;

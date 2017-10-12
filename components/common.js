@@ -29,6 +29,7 @@ export const Text = styled.Text`
 	font-family: app-regular;
 	margin-top: 2;
 	margin-bottom: 2;
+	font-size: 14;
 `;
 
 export const Bold = styled.Text`

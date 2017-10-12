@@ -210,6 +210,7 @@ const OopsText = styled(Text)`
   font-size: 24;
   margin-top: 84;
   margin-bottom: 84;
+  text-align: center;
 `;
 
 const OverlapingContainer = styled.ScrollView`
