@@ -33,8 +33,10 @@ export default class LeaderboardScreen extends React.Component {
 
   share() {
     Share.share({
-      'message' : 'Wanna be more fun? Invite your friends!',
+      'message' : "Join me to get amazing rewards on KrisFlyer Mobile App!\n\nPlease register using: https://www.singaporeair.com/en_UK/ppsclub-krisflyer/registration-form/",
       'title' : 'Invite Friends'
+    }, {
+      dialogTitle: 'Invite Friends',
     });
   }
 
@@ -110,8 +112,8 @@ export default class LeaderboardScreen extends React.Component {
     <LeaderboardContainer>
       <EmptyStateImage source={IlluEmptyState} resizeMode="contain" />
       <OopsText textAlign="center">Oops... None of your friends are here yet. Invite them for more fun!</OopsText>
-      <TouchableOpacity activeOpacity={0.7}>
-        <FacebookInviteButton onPress={this.share()} >
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this.share()} >
+        <FacebookInviteButton>
           <Zocial name="facebook" color={theme.color.white} size={16} />
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Bold style={{ color: theme.color.white, fontSize: 16 }} textAlign="center">Invite friends</Bold>
