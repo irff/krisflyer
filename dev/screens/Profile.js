@@ -156,7 +156,6 @@ export default class InventoryScreen extends React.Component {
             <Container>
               <HeadingNavigation>
                 <Subheading>Active Items</Subheading>
-                <Text>See all ></Text>
               </HeadingNavigation>
 
               <ScrollView horizontal style={{ marginLeft: -32, marginRight: -32 }}>
@@ -179,7 +178,6 @@ export default class InventoryScreen extends React.Component {
 
               <HeadingNavigation style={{ marginTop: 12 }}>
                 <Subheading>Used / Expired Items</Subheading>
-                <Text>See all ></Text>
               </HeadingNavigation>
 
               <ScrollView horizontal style={{ marginLeft: -32, marginRight: -32 }}>
