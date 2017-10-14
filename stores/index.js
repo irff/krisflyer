@@ -13,27 +13,7 @@ import {
 	EventModel
  } from '../models';
 
-globalObject = [
-	new ItemModel(this,
-		'5% extra miles',
-		'Get 5% extra miles for every flight that you fly',
-		"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
-		'MULTIPLER',
-		4375,
-		0,
-		'1 time'
-	),
-	new ItemModel(this,
-		'Access to exclusive lounges',
-		'Relax in comfort at more than 1,000 lounges around the world, even when you fly in Premium Economy or Economy Class with Singapore Airlines, SilkAir, Virgin Australia, Virgin Atlantic, Vistara, Star Alliance and Star Alliance Connecting Partner airlines',
-		"• Valid for one time use only\n• Valid for 1 month after purchase\n• Voucher cannot be exchanged with money \n• Only applicable for members with more than 35,000 miles \n• Exclusives for KFholder. Cannot be handed to any relatives (Might require ID)",
-		'ACCESS',
-		12500,
-		0,
-		'1 time'
-	)
-]
-
+import { AsyncStorage } from 'react-native';
 
 class CounterStore {
 	constructor(rootStore) {
@@ -58,12 +38,27 @@ class UserStore {
 
     @observable user = new UserModel(this, 'Loading...', 0, 0, 0);
 
-    populateData() {
+    async populateData() {
     	profile = this.rootStore.profileStore.profile;
     	this.user.name = `${profile.firstName} ${profile.lastName}`;
     	this.user.miles = 26028;
     	this.user.points = 42068;
     	this.user.level = 1;
+
+		try {
+		  	const value = await AsyncStorage.getItem('user_points');
+		  	if (value !== null){
+		  		this.user.points = parseInt(value);
+		  	} else {
+		  		const value = 42068;
+				await AsyncStorage.setItem('user_points', value.toString());
+				this.user.points = value;
+		  	}
+		} catch (error) {
+			console.log("ERROR storing points");
+			console.log(error.message);
+		}
+
     }
 }
 
@@ -100,6 +95,7 @@ class ItemListStore {
 
 	@observable items = [
 		new ItemModel(this,
+			0,
 			'5% extra miles',
 			'Get 5% extra miles for every flight that you fly',
 			"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
@@ -109,6 +105,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			1,
 			'Access to exclusive lounges',
 			'Relax in comfort at more than 1,000 lounges around the world, even when you fly in Premium Economy or Economy Class with Singapore Airlines, SilkAir, Virgin Australia, Virgin Atlantic, Vistara, Star Alliance and Star Alliance Connecting Partner airlines',
 			"• Valid for one time use only\n• Valid for 1 month after purchase\n• Voucher cannot be exchanged with money \n• Only applicable for members with more than 35,000 miles \n• Exclusives for KFholder. Cannot be handed to any relatives (Might require ID)",
@@ -118,6 +115,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			2,
 			'Extra baggage - 5 Kg',
 			'Extra baggage allowance up to 5 more Kg',
 			"• Valid for one time use only \n• Valid for 1 year after purchase\n• Voucher cannot be exchanged with money",
@@ -127,6 +125,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			3,
 			'10% extra miles',
 			'Get 10% extra miles for every flight that you fly',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -136,6 +135,7 @@ class ItemListStore {
 			'1 year'
 		),
 		new ItemModel(this,
+			4,
 			'Priority reservation waitlist',
 			'You’ll be one of the first to get a seat if someone doesn’t make the flight.',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -145,6 +145,7 @@ class ItemListStore {
 			'1 year'
 		),
 		new ItemModel(this,
+			5,
 			'Priority airport standby',
 			'If you need to fly at the last minute and can’t get a confirmed reservation, you’ll be given priority on airport standby lists',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -154,6 +155,7 @@ class ItemListStore {
 			'1 year'
 		),
 		new ItemModel(this,
+			6,
 			'Priority airport check-in',
 			'Get priority service at specially designated check-in counters which feature the KrisFlyer Elite Gold or Star Alliance logo, where available',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -163,6 +165,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			7,
 			'Priority boarding',
 			'You’ll be invited to board the plane before other passengers, even when you travel in Premium Economy Class or Economy Class.',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -172,6 +175,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			8,
 			'Priority baggage handling',
 			'Your baggage will be given priority handling, even when you travel in Premium Economy Class or Economy Class',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -181,6 +185,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			9,
 			'Extra baggage - 10 Kg',
 			'Extra baggage allowance up to 10 more Kg',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -190,6 +195,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			10,
 			'Extra baggage - 15 Kg',
 			'Extra baggage allowance up to 15 more Kg',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -199,6 +205,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			10,
 			'Seat upgrade',
 			'Upgrade from economy to premium economy, premium economy to business, etc.',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -208,6 +215,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			11,
 			'Merchant voucher code',
 			'Get valuable discounts for more than 100+ merhants partnering with Singapore Airlines',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -217,6 +225,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			12,
 			'Flight discount 5%',
 			'Get 5% discount with maximum of IDR 200.000',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -226,6 +235,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			13,
 			'Flight discount 10%',
 			'Get 5% discount with maximum of IDR 300.000',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -235,6 +245,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			14,
 			'Flight discount 15%',
 			'Get 5% discount with maximum of IDR 500.000',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -244,6 +255,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			15,
 			'SIA Sticker',
 			'Redeem points and get SIA merchandise',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -253,6 +265,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			16,
 			'SIA T-shirts',
 			'Redeem points and get SIA merchandise',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -262,6 +275,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			17,
 			'SIA Tumblr',
 			'Redeem points and get SIA merchandise',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -271,6 +285,7 @@ class ItemListStore {
 			'1 time'
 		),
 		new ItemModel(this,
+			18,
 			'SIA Notebook',
 			'Redeem points and get SIA merchandise',
 			"Valid for one time use only \nValid for 1 year after purchase\nVoucher cannot be exchanged with money",
@@ -305,7 +320,28 @@ class PurchasedItemListStore {
 		}
 	}
 
-	constructInitialItems() {
+	async constructInitialItems() {
+        let items = []
+        try {
+            const value = await AsyncStorage.getItem('user_items');
+            if (value !== null){
+                items = JSON.parse(value);
+            } else {
+                const value = [];
+                await AsyncStorage.setItem('user_items', JSON.stringify(value));
+                items = value;
+            }
+        } catch (error) {
+            console.log("ERROR getting/storing items");
+            console.log(error.message);
+        }
+
+        for(item of items) {
+            console.log('pushing items=');
+            const item_obj = this.rootStore.itemListStore.items[item];
+            this.purchased_items.push(new PurchasedItemModel(item_obj));
+        }
+
 		const item0 = this.rootStore.itemListStore.items[0];
 		const item1 = this.rootStore.itemListStore.items[1];
 		this.purchased_items.push(new PurchasedItemModel(item0, true));

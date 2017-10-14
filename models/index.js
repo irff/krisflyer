@@ -3,6 +3,8 @@
 import { observable, action, computed } from 'mobx';
 import * as Utils from '../utils';
 
+import { AsyncStorage } from 'react-native';
+ 
 // Model concerning a single User
 export class UserModel {
     constructor(store, name, miles, points, level) {
@@ -72,14 +74,28 @@ export class UserModel {
         }
     }
 
-    @action addPoints(value) {
+    @action async addPoints(value) {
         this.points += (this.bonus_multiplier * value)
+        
+        try {
+            await AsyncStorage.setItem('user_points', this.points.toString());
+        } catch (error) {
+            console.log("ERROR storing points (add points)");
+            console.log(error.message);
+        }
     }
 
-    @action subtractPoints(value) {
+    @action async subtractPoints(value) {
         if(this.points >= value) {
             this.points -= value;            
         }
+        try {
+            await AsyncStorage.setItem('user_points', this.points.toString());
+        } catch (error) {
+            console.log("ERROR storing points (subtract points)");
+            console.log(error.message);
+        }
+
     }
 }
 
@@ -116,9 +132,10 @@ export class MilestoneModel {
 
 // A Model concerning a single item available to buy
 export class ItemModel {
-    constructor(store, name, description, terms, usage_type, price, miles_required, expired) {
+    constructor(store, idx, name, description, terms, usage_type, price, miles_required, expired) {
         this.store = store;
         this.id = Utils.uuid();
+        this.idx = idx;
         this.name = name;
         this.description = description;
         this.terms = terms;
@@ -130,6 +147,7 @@ export class ItemModel {
 
     store = '';
     id = '';
+    idx = 0;
     name = '';
     description = ''; 
     terms = '';
@@ -148,12 +166,26 @@ export class ItemModel {
         return user.points >= this.price;
     }
 
-    @action purchaseItem() {
+    @action async purchaseItem() {
         user = this.store.rootStore.userStore.user;
         if(this.isMilesEnough) {
             if(this.isPointsEnough) {
                 this.store.rootStore.purchasedItemListStore.addPurchasedItem(this);
-                user.points -= this.price;
+                user.subtractPoints(this.price);
+
+                try {
+
+                    const itemsStr = await AsyncStorage.getItem('user_items');
+                    const items = JSON.parse(itemsStr);
+
+                    items.push(this.idx);
+
+                    await AsyncStorage.setItem('user_items', JSON.stringify(items));
+                } catch (error) {
+                    console.log("ERROR storing items");
+                    console.log(error.message);
+                }
+
             } else {
                 throw new Error('You don\'t have enough points to redeem this item');
             }        
