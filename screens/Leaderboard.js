@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, View, TouchableOpacity } from 'react-native';
+import { ScrollView, Image, View, TouchableOpacity, Share } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
 import { Zocial } from '@expo/vector-icons';
@@ -30,6 +30,36 @@ import IlluEmptyState from '../assets/illustrations/ilEmptystate.png';
 @inject('store')
 @observer
 export default class LeaderboardScreen extends React.Component {
+
+  share() {
+    Share.share({
+      'message' : 'Wanna be more fun? Invite your friends!',
+      'title' : 'Invite Friends'
+    });
+  }
+
+  async login() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1287296804709524', {
+      permissions: ['public_profile', 'user_friends'],
+    });
+
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+
+      let res = await response.json();
+      let user_id = res.id;
+
+      console.log(res);
+
+      const friends_list_resp = await fetch(
+        `https://graph.facebook.com/${user_id}/friendlists?access_token=${token}`);
+      console.log(await friends_list_resp.json());
+
+    }
+  }
+
   componentDidMount() {
     console.log('enter leaderboard');
     console.log('updating leaderboard');
@@ -81,7 +111,7 @@ export default class LeaderboardScreen extends React.Component {
       <EmptyStateImage source={IlluEmptyState} resizeMode="contain" />
       <OopsText textAlign="center">Oops... None of your friends are here yet. Invite them for more fun!</OopsText>
       <TouchableOpacity activeOpacity={0.7}>
-        <FacebookInviteButton>
+        <FacebookInviteButton onPress={this.share()} >
           <Zocial name="facebook" color={theme.color.white} size={16} />
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Bold style={{ color: theme.color.white, fontSize: 16 }} textAlign="center">Invite friends</Bold>
