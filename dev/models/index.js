@@ -149,12 +149,13 @@ export class QuestModel {
 }
 
 export class TopUpItemModel {
-    constructor(store, amount, currency, points, description) {
+    constructor(store, amount, currency, points, bonus, description) {
         this.store = store;
         this.id = Utils.uuid();
         this.amount = amount;
         this.currency = currency;
         this.points = points;
+        this.bonus = bonus;
         this.description = description;
     }
 
@@ -163,6 +164,7 @@ export class TopUpItemModel {
     amount = 0;
     currency = '';
     points = 0;
+    bonus = 0;
     description = '';
 }
 
