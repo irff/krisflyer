@@ -147,7 +147,7 @@ export default class InventoryScreen extends React.Component {
                   </Flex>
                   <Flex>
                     <ProfileSectionTitle>GLOBAL RANK</ProfileSectionTitle>
-                    <ProfileSectionStats>{formatNumber(1560)}</ProfileSectionStats>
+                    <ProfileSectionStats>{formatNumber(801)}</ProfileSectionStats>
                   </Flex>
                 </Row>
               </ProfileCard>

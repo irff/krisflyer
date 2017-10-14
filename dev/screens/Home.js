@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component {
 
             <BorderDivider />
 
-            <Text>You are ranked the <YellowNum>{formatNumber(1560)}</YellowNum>th on global leaderboard</Text>
+            <Text>You are ranked the <YellowNum>{formatNumber(801)}</YellowNum>th on global leaderboard</Text>
 
             <SecondaryButton
               title="See Full Leaderboard"
