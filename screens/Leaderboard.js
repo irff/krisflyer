@@ -34,10 +34,10 @@ export default class LeaderboardScreen extends React.Component {
 
   share() {
     Share.share({
-      'message' : "Join me to get amazing rewards on KrisFlyer Mobile App!\n\nPlease register using: https://www.singaporeair.com/en_UK/ppsclub-krisflyer/registration-form/",
-      'title' : 'Invite Friends'
+      'message' : "Join me to get exclusive rewards from Singapore Airlines on KrisFlyer Mobile App!\n\nRegister now on: https://www.singaporeair.com/en_UK/ppsclub-krisflyer/registration-form/",
+      'title' : 'Invite Friends to KrisFlyer Mobile App'
     }, {
-      dialogTitle: 'Invite Friends',
+      dialogTitle: 'Invite Friends to KrisFlyer Mobile App',
     });
   }
 
