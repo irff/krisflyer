@@ -75,7 +75,7 @@ export class UserModel {
     }
 
     @action async addPoints(value) {
-        this.points += (this.bonus_multiplier * value)
+        this.points += value;
         
         try {
             await AsyncStorage.setItem('user_points', this.points.toString());
@@ -146,6 +146,24 @@ export class QuestModel {
     reward = 0;
     progress = 0;
     is_expired = false;
+}
+
+export class TopUpItemModel {
+    constructor(store, amount, currency, points, description) {
+        this.store = store;
+        this.id = Utils.uuid();
+        this.amount = amount;
+        this.currency = currency;
+        this.points = points;
+        this.description = description;
+    }
+
+    store = '';
+    id = '';
+    amount = 0;
+    currency = '';
+    points = 0;
+    description = '';
 }
 
 // A Model concerning a single item available to buy

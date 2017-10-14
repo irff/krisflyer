@@ -146,6 +146,8 @@ export default class HomeScreen extends React.Component {
             <BoostText>Boost your points by completing quests!</BoostText>
             <Button title="Explore Quests" onPress={() => navigate('quests')} />
 
+            <Button title="Pay with Stripe" onPress={() => this.props.store.paymentStore.topUpPoints() } />
+
             <BorderDivider />
 
             <HeadingNavigation>

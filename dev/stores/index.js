@@ -11,10 +11,14 @@ import {
 	PurchasedItemModel,
 	VoucherModel,
 	EventModel,
-	QuestModel
+	QuestModel,
+	TopUpItemModel
  } from '../models';
 
 import { AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { DangerZone } from 'expo';
+const { Payments } = DangerZone;
 
 class CounterStore {
 	constructor(rootStore) {
@@ -532,6 +536,139 @@ class ProfileStore {
 	}
 }
 
+class PaymentStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	items = [
+		new TopUpItemModel(this,
+			25,
+			'usd',
+			3125,
+			'3,125 pts'
+			),
+		new TopUpItemModel(this,
+			50,
+			'usd',
+			6250,
+			'6,250 pts'
+			),
+		new TopUpItemModel(this,
+			100,
+			'usd',
+			12500,
+			'12,500 pts'
+			),
+		new TopUpItemModel(this,
+			150,
+			'usd',
+			18750,
+			'18,750 pts'
+			),
+		new TopUpItemModel(this,
+			200,
+			'usd',
+			25000,
+			'25,000 pts'
+			),
+		new TopUpItemModel(this,
+			300,
+			'usd',
+			37500,
+			'37,500 pts'
+			)
+	];
+
+	async processPayment(request_data) {
+		let req_params = request_data;
+
+		var formData = [];
+		for (var req_param in req_params) {
+		  var encodedKey = encodeURIComponent(req_param);
+		  var encodedValue = encodeURIComponent(req_params[req_param]);
+		  formData.push(encodedKey + "=" + encodedValue);
+		}
+
+		formData = formData.join("&");
+
+		console.log('FORM_DATA:');
+		console.log(formData);
+
+		let headers = {
+      		'Authorization': 'Bearer sk_test_XHmq3WzIQlEY7XKUqMxU8Tgs',
+      		'Accept': 'application/json',
+      		'Content-Type': 'application/x-www-form-urlencoded'
+  		};
+
+		const response = await fetch('https://api.stripe.com/v1/charges', {
+			method: 'post',
+			body: formData,
+			headers: new Headers(headers)
+		});
+	
+		response_json = await response.json();
+		return response_json;
+	}
+
+	async topUpPoints(item, card) {
+		Payments.initialize({
+  			publishableKey: 'pk_test_hs5Ps81j0IgUafTjCx0fuZvp' // Your Stripe publishable key
+		});
+
+		const params = {
+		  // mandatory
+		  // number: '4242424242424242',
+		  // expMonth: 11,
+		  // expYear: 17,
+		  // cvc: '223',
+
+		  number: card.number,
+		  expMonth: card.expMonth,
+		  expYear: card.expYear,
+		  cvc: card.cvc,
+
+		  // optional
+		  name: 'Test User',
+		  currency: 'usd',
+		  addressLine1: '123 Test Street',
+		  addressLine2: 'Apt. 5',
+		  addressCity: 'Test City',
+		  addressState: 'Test State',
+		  addressCountry: 'Test Country',
+		  addressZip: '55555',
+		}
+
+		const token = await Payments.createTokenWithCardAsync(params)
+
+		const token_str = token['tokenId'];
+		console.log("STRIPE PAYMENT TOKEN:");
+		console.log(token_str);
+
+		const request_data = {
+			amount: item.amount * 100,
+			currency: item.currency,
+			description: item.description,
+			source: token_str
+		};
+
+		let paymentResponse = await this.processPayment(request_data);
+
+		console.log("PAYMENT RESPONSE:");
+		console.log(paymentResponse);
+
+		if(paymentResponse.status == 'succeeded') {
+			Alert.alert('Payment succeeded',
+				`You successfully purchased ${item.description} for USD ${item.amount}`);
+	        user = this.rootStore.userStore.user;
+	        await user.addPoints(item.points);
+		} else {
+			Alert.alert('Payment Error',
+				'Could not connect to Payment Server');
+		}
+	}
+}
+
 class RootStore {
 	constructor() {
 		this.counterStore = new CounterStore(this);
@@ -544,6 +681,7 @@ class RootStore {
 		this.eventListStore = new EventListStore(this);
 		this.leaderListStore = new LeaderListStore(this);
 		this.questListStore = new QuestListStore(this);
+		this.paymentStore = new PaymentStore(this);
 
 
 		this.profileStore = new ProfileStore(this);
@@ -556,4 +694,5 @@ const singleton = new RootStore();
 singleton.profileStore.fetchData();
 singleton.purchasedItemListStore.constructInitialItems();
 singleton.leaderListStore.constructLeaderboard();
+
 export default singleton;
