@@ -29,46 +29,6 @@ import IconDiscount from '../assets/icons/discount.png';
 @inject('store')
 @observer
 export default class QuestsScreen extends React.Component {
-
-  static quests = [
-    {
-      title: 'Fly 3 times to any city in the period of 6 months',
-      reward: 4000,
-      progress: 0.33,
-      is_expired: false,
-    },
-    {
-      title: 'Shop anything in total of $400 in KrisFlyerSpree',
-      reward: 2000,
-      progress: 0.2,
-      is_expired: false,
-    },
-    {
-      title: 'Try Singapore Stopover Holiday 3D2N Package',
-      reward: 2500,
-      progress: 0,
-      is_expired: false,
-    },
-    {
-      title: 'Fly to any city with Business Class',
-      reward: 3700,
-      progress: 0,
-      is_expired: false,
-    },
-    {
-      title: 'Purchase additional 10 kgs of baggage',
-      reward: 1000,
-      progress: 1,
-      is_expired: true,
-    },
-    {
-      title: 'Shop anything in total of $200 in KrisFlyerSpree',
-      reward: 500,
-      progress: 0.2,
-      is_expired: true,
-    },
-  ];
-
   state = {
     sections: [ true, false, false, false ],
   }
@@ -83,7 +43,7 @@ export default class QuestsScreen extends React.Component {
 
   render() {
     const { goBack, navigate } = this.props.navigation;
-    const quests =  QuestsScreen.quests;
+    const quests =  this.props.store.questListStore.quests;
     const sectionState = this.state.sections;
 
     return (
@@ -105,6 +65,7 @@ export default class QuestsScreen extends React.Component {
                 <HeaderIcon name="user" size={16} color={theme.color.white } />
               </TouchableOpacity>
             </NavBar>
+
           </Header>
 
           <Container>

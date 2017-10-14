@@ -10,7 +10,8 @@ import {
 	MilestoneModel,
 	PurchasedItemModel,
 	VoucherModel,
-	EventModel
+	EventModel,
+	QuestModel
  } from '../models';
 
 import { AsyncStorage } from 'react-native';
@@ -85,6 +86,57 @@ class MilestoneListStore {
 		new MilestoneModel(5000, 300),
 		new MilestoneModel(15000, 400),
 		new MilestoneModel(35000, 500)
+	];
+}
+
+class QuestListStore {
+	constructor(rootStore) {
+		this.rootStore = rootStore;
+	}
+
+	@observable quests = [
+	    new QuestModel(
+	        this,
+	        'Fly 3 times to any city in the period of 6 months',
+	        4000,
+	        0.33,
+	        false,
+	    ),
+	    new QuestModel(
+	        this,
+	        'Shop anything in total of $400 in KrisFlyerSpree',
+	        2000,
+	        0.2,
+	        false,
+	    ),
+	    new QuestModel(
+	        this,
+	        'Try Singapore Stopover Holiday 3D2N Package',
+	        2500,
+	        0,
+	        false,
+	    ),
+	    new QuestModel(
+	        this,
+	        'Fly to any city with Business Class',
+	        3700,
+	        0,
+	        false,
+	    ),
+	    new QuestModel(
+	        this,
+	        'Purchase additional 10 kgs of baggage',
+	        1000,
+	        1,
+	        true,
+	    ),
+	    new QuestModel(
+	        this,
+	        'Shop anything in total of $200 in KrisFlyerSpree',
+	        500,
+	        0.2,
+	        true,
+	    ),
 	];
 }
 
@@ -491,6 +543,7 @@ class RootStore {
 		this.voucherListStore = new VoucherListStore(this);
 		this.eventListStore = new EventListStore(this);
 		this.leaderListStore = new LeaderListStore(this);
+		this.questListStore = new QuestListStore(this);
 
 
 		this.profileStore = new ProfileStore(this);

@@ -130,6 +130,24 @@ export class MilestoneModel {
     rewards = 0;    
 }
 
+export class QuestModel {
+    constructor(store, title, reward, progress, is_expired) {
+        this.store = store;
+        this.id = Utils.uuid();
+        this.title = title;
+        this.reward = reward;
+        this.progress = progress;
+        this.is_expired = is_expired;
+    }
+
+    store = '';
+    id = '';
+    title = '';
+    reward = 0;
+    progress = 0;
+    is_expired = false;
+}
+
 // A Model concerning a single item available to buy
 export class ItemModel {
     constructor(store, idx, name, description, terms, usage_type, price, miles_required, expired) {
