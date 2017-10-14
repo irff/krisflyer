@@ -43,7 +43,7 @@ export default class TopUpScreen extends React.Component {
 
   setCCInput = () => {
     console.log(this.refs);
-    this.refs['ccinput'].setValues({
+    this.refs.CCInput.setValues({
       number: "5555 5555 5555 4444",
       expiry: "10/22",
       cvc: "123",
@@ -109,10 +109,11 @@ export default class TopUpScreen extends React.Component {
             <Bold style={{ marginTop: 16 }}>Credit Card Details</Bold>
 
             <CreditCardInput
-              refs="ccinput"
+              ref="CCInput"
               allowScroll
               cardImageFront={require('../assets/illustrations/cc.png')}
               cardImageBack={require('../assets/illustrations/cc-back.png')}
+              onFocus={this.setCCInput}
             />
 
             <Button
