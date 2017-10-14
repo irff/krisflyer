@@ -167,8 +167,6 @@ export default class HomeScreen extends React.Component {
               </BlueBox>
             </Row>
 
-            <Button title="Pay with Stripe" onPress={() => this.props.store.paymentStore.topUpPoints() } />
-
             <BorderDivider />
 
             <HeadingNavigation>

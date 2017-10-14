@@ -6,6 +6,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
 import theme from '../constants/theme';
 import Formatter from 'human-format';
+import { formatNumber } from '../utils';
 import {
   Flex,
   AlignCenter,
@@ -41,11 +42,13 @@ import IlluBaggage from '../assets/illustrations/illu_baggage.png';
 export default class InventoryScreen extends React.Component {
   render() {
     const { goBack, navigate } = this.props.navigation;
+    const { user } = this.props.store.userStore;
+    const { purchased_items } = this.props.store.purchasedItemListStore;
 
     const statistics = [
       {
         text: 'We thank you for being loyal with us by traveling',
-        number: 42100,
+        number: user.miles,
         unit: 'miles',
         background: IlluMiles,
       },
@@ -118,10 +121,10 @@ export default class InventoryScreen extends React.Component {
                 </Row>
                 <Row>
                   <Flex>
-                    <ProfileSectionContent numberOfLines={1}>Skylar White</ProfileSectionContent>
+                    <ProfileSectionContent numberOfLines={1}>{user.name}</ProfileSectionContent>
                   </Flex>
                   <Flex>
-                    <ProfileSectionContent numberOfLines={1}>whitey1999</ProfileSectionContent>
+                    <ProfileSectionContent numberOfLines={1}>robbstark94</ProfileSectionContent>
                   </Flex>
                   <Flex>
                     <Row style={{ justifyContent: 'center' }}>
@@ -136,15 +139,15 @@ export default class InventoryScreen extends React.Component {
                 <Row>
                   <Flex>
                     <ProfileSectionTitle>MILES REACHED</ProfileSectionTitle>
-                    <ProfileSectionStats>45,650</ProfileSectionStats>
+                    <ProfileSectionStats>{formatNumber(user.miles)}</ProfileSectionStats>
                   </Flex>
                   <Flex>
                     <ProfileSectionTitle>OWNED ITEMS</ProfileSectionTitle>
-                    <ProfileSectionStats>34</ProfileSectionStats>
+                    <ProfileSectionStats>{purchased_items.length}</ProfileSectionStats>
                   </Flex>
                   <Flex>
                     <ProfileSectionTitle>GLOBAL RANK</ProfileSectionTitle>
-                    <ProfileSectionStats>1,209</ProfileSectionStats>
+                    <ProfileSectionStats>{formatNumber(1560)}</ProfileSectionStats>
                   </Flex>
                 </Row>
               </ProfileCard>

@@ -438,41 +438,41 @@ class LeaderListStore {
 		leaders = [
 			new LeaderModel(
 				'Shylla E. Pramadhani',
-				29965,
+				231970,
 				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
-				'Michael Jones', 12742,
+				'mike.jones', 175424,
 				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
-				'Tim Nguyen',
-				24912,
+				't1mmy86',
+				160537,
 				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
-				this.rootStore.userStore.user.name,
-				this.rootStore.userStore.user.miles,
-				this.rootStore.purchasedItemListStore
-			),
-			new LeaderModel(
-				'Kim Seok-Hyeo',
-				14291,
+				'mr.seoul7777',
+				144291,
 				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
 				'Rini Tanyata',
-				23780,
+				128976,
 				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(
-				'Joshua Arisio',
-				18172,
+				'irfan3',
+				28172,
 				new PurchasedItemListStore(this.rootStore)
+			),
+			new LeaderModel(
+				'robbstark94',
+				this.rootStore.userStore.user.miles,
+				this.rootStore.purchasedItemListStore
 			),
 			new LeaderModel(
 				'Muhammad Anto',
-				22459,
+				25459,
 				new PurchasedItemListStore(this.rootStore)
 			),
 			new LeaderModel(

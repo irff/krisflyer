@@ -82,6 +82,20 @@ export default class LeaderboardScreen extends React.Component {
     } else this.setState({ opened: idx });
   }
 
+  countries = [
+    'id',
+    'ao',
+    'my',
+    'de',
+    'us',
+    'ge',
+    'sg',
+    'sl',
+    'id',
+    'my',
+    'us',
+  ]
+
   renderGlobal = () => (
     <View>
       <LeaderboardContainer isTop>
@@ -92,7 +106,7 @@ export default class LeaderboardScreen extends React.Component {
               <Flex>
                 <Row removeClippedSubviews>
                   <Flex><LeaderboardName numberOfLines={1}>{entry.name}</LeaderboardName></Flex>
-                  <Image source={{ uri: "http://www.countryflags.io/my/flat/16.png" }} style={{ width: 16, height: 16, flexShrink: 0 }}/>
+                  <Image source={{ uri: `http://www.countryflags.io/${this.countries[idx]}/flat/16.png` }} style={{ width: 16, height: 16, flexShrink: 0 }}/>
                 </Row>
               </Flex>
               <LeaderboardMiles>{entry.miles} miles</LeaderboardMiles>
@@ -101,14 +115,14 @@ export default class LeaderboardScreen extends React.Component {
         )}
       </LeaderboardContainer>
       <LeaderboardContainer style={{ marginTop: 4 }}>
-        {this.props.store.leaderListStore.leaders.slice(0,3).map((entry, idx) =>
+        {this.props.store.leaderListStore.leaders.slice(6,9).map((entry, idx) =>
           <TouchableOpacity onPress={this.toggle(idx)} key={idx}>
             <LeaderboardEntry first={idx === 0} active={idx === 1}>
               <LeaderboardPlace active={idx === 1}>{800 + idx}</LeaderboardPlace>
               <Flex>
                 <Row removeClippedSubviews>
                   <Flex><LeaderboardName numberOfLines={1}>{entry.name}</LeaderboardName></Flex>
-                  <Image source={{ uri: "http://www.countryflags.io/my/flat/16.png" }} style={{ width: 16, height: 16, flexShrink: 0 }}/>
+                  <Image source={{ uri: `http://www.countryflags.io/${this.countries[idx+5]}/flat/16.png` }} style={{ width: 16, height: 16, flexShrink: 0 }}/>
                 </Row>
               </Flex>
               <LeaderboardMiles>{entry.miles} miles</LeaderboardMiles>
@@ -125,7 +139,6 @@ export default class LeaderboardScreen extends React.Component {
       <OopsText textAlign="center">Oops... None of your friends are here yet. Invite them for more fun!</OopsText>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.share()} >
         <FacebookInviteButton>
-          <Zocial name="facebook" color={theme.color.white} size={16} />
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Bold style={{ color: theme.color.white, fontSize: 16 }} textAlign="center">Invite friends</Bold>
           </View>
@@ -262,10 +275,10 @@ const LeaderboardMiles = styled(Text)`
 
 const FacebookInviteButton = styled.View`
   padding-top: 8;
-  padding-left: 12;
+  padding-left: 8;
   padding-right: 8;
-  padding-bottom: 12;
-  background-color: #3b5998;
+  padding-bottom: 8;
+  background-color: ${theme.color.yellow};
   flex-direction: row;
   align-items: center;
   border-radius: 4;

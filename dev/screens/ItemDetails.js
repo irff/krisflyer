@@ -38,25 +38,29 @@ export default class ItemDetailsScreen extends React.Component {
   }
 
   confirm = () => {
-    Alert.alert(
-      'Redeem Points',
-      `Are you sure to redeem ${this.item.price} points for ${this.item.name}?`,
-      [
-        {
-          text: 'No',
-        },
-        {
-          text: 'Yes',
-          onPress: this.redeem,
-        }
-      ]
-    )
+    if(this.item.isMilesEnough) {
+      Alert.alert(
+        'Redeem Points',
+        `Are you sure to redeem ${this.item.price} points for ${this.item.name}?`,
+        [
+          {
+            text: 'No',
+          },
+          {
+            text: 'Yes',
+            onPress: this.redeem,
+          }
+        ]
+      )      
+    } else {
+      Alert.alert('Redeem Failed', 'You don\'t have enough points to redeem this item')
+    }
   }
 
   redeem = () => {
     try {
       this.item.purchaseItem();
-      this.props.navigation.navigate('inventory');      
+      this.props.navigation.navigate('profile');      
     } catch (e) {
       Alert.alert('Redeem failed', e.message);
     }
