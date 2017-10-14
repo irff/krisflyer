@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, Image, View, TouchableOpacity, Share } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
-import { Zocial } from '@expo/vector-icons';
+import { Zocial, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
 import theme from '../constants/theme';
 import {
@@ -81,35 +81,44 @@ export default class LeaderboardScreen extends React.Component {
   }
 
   renderGlobal = () => (
-    <LeaderboardContainer>
-      {this.props.store.leaderListStore.leaders.map((entry, idx) =>
-        <View key={idx}>
-          <TouchableOpacity onPress={this.toggle(idx)}>
+    <View>
+      <LeaderboardContainer isTop>
+        {this.props.store.leaderListStore.leaders.slice(0, 5).map((entry, idx) =>
+          <TouchableOpacity onPress={this.toggle(idx)} key={idx}>
             <LeaderboardEntry first={idx === 0}>
               <LeaderboardPlace>{idx < 9 ? '0' : ''}{idx + 1}</LeaderboardPlace>
               <Flex>
-                <LeaderboardName numberOfLines={1}>{entry.name}</LeaderboardName>
+                <Row removeClippedSubviews>
+                  <Flex><LeaderboardName numberOfLines={1}>{entry.name}</LeaderboardName></Flex>
+                  <Image source={{ uri: "http://www.countryflags.io/my/flat/16.png" }} style={{ width: 16, height: 16, flexShrink: 0 }}/>
+                </Row>
               </Flex>
               <LeaderboardMiles>{entry.miles} miles</LeaderboardMiles>
             </LeaderboardEntry>
           </TouchableOpacity>
-          {this.state.opened === idx &&
-            <ScrollView horizontal>
-              {entry.purchased_item_list.purchased_items.map(({ item }) =>
-                <ItemCard key={item.id}>
-                  <Image source={IconBaggage} style={{ width: 36, height: 36 }} resizeMode="contain" />
-                  <Text numberOfLines={2} textAlign="center" style={{ fontSize: 11 }}>{item.name}</Text>
-                </ItemCard>
-              )}
-            </ScrollView>
-          }
-        </View>
-      )}
-    </LeaderboardContainer>
+        )}
+      </LeaderboardContainer>
+      <LeaderboardContainer style={{ marginTop: 4 }}>
+        {this.props.store.leaderListStore.leaders.slice(0,3).map((entry, idx) =>
+          <TouchableOpacity onPress={this.toggle(idx)} key={idx}>
+            <LeaderboardEntry first={idx === 0} active={idx === 1}>
+              <LeaderboardPlace active={idx === 1}>{800 + idx}</LeaderboardPlace>
+              <Flex>
+                <Row removeClippedSubviews>
+                  <Flex><LeaderboardName numberOfLines={1}>{entry.name}</LeaderboardName></Flex>
+                  <Image source={{ uri: "http://www.countryflags.io/my/flat/16.png" }} style={{ width: 16, height: 16, flexShrink: 0 }}/>
+                </Row>
+              </Flex>
+              <LeaderboardMiles>{entry.miles} miles</LeaderboardMiles>
+            </LeaderboardEntry>
+          </TouchableOpacity>
+        )}
+      </LeaderboardContainer>
+    </View>
   )
 
   renderFriends = () => (
-    <LeaderboardContainer>
+    <LeaderboardContainer style={{ padding: 24 }} isTop>
       <EmptyStateImage source={IlluEmptyState} resizeMode="contain" />
       <OopsText textAlign="center">Oops... None of your friends are here yet. Invite them for more fun!</OopsText>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.share()} >
@@ -128,7 +137,7 @@ export default class LeaderboardScreen extends React.Component {
 
     return (
       <BaseScreen>
-        <ScrollView contentContainerStyle={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{ flex: 1 }} removeClippedSubviews={false}>
           <Header colors={[ theme.color.black, theme.color.blue ]} style={{ height: 200 }}>
             <NavBar>
               <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
@@ -147,24 +156,18 @@ export default class LeaderboardScreen extends React.Component {
             </NavBar>
           </Header>
           <OverlapingContainer>
-            <Row>
-              <Flex style={{ alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => this.setState({ tab: 'global' })}>
-                  <Bold style={{
-                    color: this.state.tab === 'global' ?  theme.color.yellow : theme.color.white,
-                  }}>Global</Bold>  
-                </TouchableOpacity>
-              </Flex>
+            <TabContainer>
+              <TabMenu activeOpacity={1} selected={this.state.tab === 'global'} onPress={() => this.setState({ tab: 'global' })}>
+                <MaterialCommunityIcons name="earth" size={14} style={{  marginRight: 8 }} />
+                <Bold>Global</Bold>
+              </TabMenu>
 
               
-              <Flex style={{ alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => this.setState({ tab: 'friends' })}>
-                  <Bold style={{
-                    color: this.state.tab === 'friends' ?  theme.color.yellow : theme.color.white,
-                  }} >Friends</Bold>
-                </TouchableOpacity>
-              </Flex>
-            </Row>
+              <TabMenu activeOpacity={1} selected={this.state.tab === 'friends'} onPress={() => this.setState({ tab: 'friends' })}>
+                <Ionicons name="md-people" size={14} style={{ marginRight: 8 }}/>
+                <Bold>Friends</Bold>
+              </TabMenu>
+            </TabContainer>
 
             {this.state.tab === 'global' && this.renderGlobal()}
             {this.state.tab === 'friends' && this.renderFriends()}
@@ -176,6 +179,26 @@ export default class LeaderboardScreen extends React.Component {
   }
 }
 
+const TabContainer = styled(Row)`
+  margin-left: 32;
+  margin-right: 32;
+  margin-top: 32;
+`;
+
+const TabMenu = styled.TouchableOpacity`
+  flex: 1;
+  background-color: ${props => props.selected ? theme.color.white : theme.color.canvas};
+  align-items: center;
+  border-top-left-radius: 4;
+  border-top-right-radius: 4;
+  padding-top: 14;
+  padding-bottom: 14;
+  elevation: 2;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Container = styled.View`
   background-color: ${theme.color.ivory};
   flex: 1;
@@ -185,15 +208,17 @@ const LeaderboardContainer = styled.View`
   background-color: ${theme.color.white};
   z-index: 1;
   border-radius: 4;
-  margin-top: 32;
   margin-bottom: 32;
   margin-left: 32;
   margin-right: 32;
   padding-top: 20;
-  padding-left: 24;
-  padding-right: 24;
   padding-bottom: 20;
   elevation: 2;
+
+  ${props => props.isTop && `
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  `};
 `;
 
 const LeaderboardEntry = styled(Row)`
@@ -201,13 +226,25 @@ const LeaderboardEntry = styled(Row)`
   padding-top: 12;
   padding-bottom: 12;
   border-color: ${theme.color.divider};
+  margin-left: 24;
+  margin-right: 24;
   ${props => !props.first && 'border-top-width: 1;'};
+  ${props => props.active && `
+    background-color: ${theme.color.yellow}
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 24;
+    padding-right: 24;
+    padding-top: 18;
+    padding-bottom: 18;
+  `};
 `;
 
 const LeaderboardPlace = styled(Bold)`
   color: ${theme.color.yellow};
   font-size: 24;
   margin-right: 16;
+  ${props => props.active && `color: ${theme.color.white}`}
 `;
 
 const LeaderboardName = styled(Bold)`
@@ -217,16 +254,8 @@ const LeaderboardName = styled(Bold)`
 
 const LeaderboardMiles = styled(Text)`
   font-size: 11;
-`;
-
-const ItemCard = styled.View`
-  background-color: ${theme.color.white};
-  align-items: center;
+  margin-left: 12;
   width: 56;
-  margin-top: 4;
-  margin-left: 4;
-  margin-right: 4;
-  margin-bottom: 4;
 `;
 
 const FacebookInviteButton = styled.View`
