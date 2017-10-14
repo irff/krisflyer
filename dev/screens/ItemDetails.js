@@ -53,7 +53,7 @@ export default class ItemDetailsScreen extends React.Component {
         ]
       )      
     } else {
-      Alert.alert('Redeem Failed', 'You don\'t have enough points to redeem this item')
+      Alert.alert('Redeem Failed', 'You don\'t have enough miles required to redeem this item')
     }
   }
 
