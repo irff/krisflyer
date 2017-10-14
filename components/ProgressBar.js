@@ -13,10 +13,10 @@ export default ({ width }) => (
 );
 
 const Wrapper = styled.View`
-	border-radius: 3;
-	border-width: 2;
+	border-radius: 4;
+	border-width: 4;
 	border-color: transparent;
-	height: 6;
+	height: 8;
 	background-color: ${theme.color.yellowLight};
 	flex-direction: row;
 	align-items: center;
@@ -31,10 +31,10 @@ const Progress = styled.View`
 `;
 
 const Dot = styled.View`
-	height: 6;
-	width: 6;
-	border-radius: 3;
-	margin-left: -3;
+	height: 8;
+	width: 8;
+	border-radius: 4;
+	margin-left: -4;
 	z-index: 1;
 	background-color: ${theme.color.yellow};
 `;
