@@ -56,15 +56,17 @@ export default class ItemsScreen extends React.Component {
 
             <HeaderInfoContainer style={{ marginTop: 32, marginBottom: 44 }}>
               <InfoContainer>
-                <InfoTitle>Your Miles</InfoTitle>
+                <InfoTitle>YOU'VE REACHED</InfoTitle>
                 <NumericText>{this.props.store.userStore.user.miles}</NumericText>
+                <UserInfoBottom>MILES</UserInfoBottom>
               </InfoContainer>
 
               <VerticalDivider />
 
               <InfoContainer>
-                <InfoTitle>Your Points</InfoTitle>
+                <InfoTitle>YOU OWN</InfoTitle>
                 <NumericText>{this.props.store.userStore.user.points}</NumericText>
+                <UserInfoBottom>POINTS</UserInfoBottom>
               </InfoContainer>
             </HeaderInfoContainer>
 
@@ -90,7 +92,8 @@ export default class ItemsScreen extends React.Component {
                   <ItemCardImage source={IconDiscount} />
                   <ItemCardDescription item={item}>
                     <Bold style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.name}</Bold>
-                    <Text numberOfLines={1} style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.price} points · {item.miles_required} miles</Text>
+                    <Text numberOfLines={1} style={{ color: item.isMilesEnough ? theme.color.black : theme.color.lightGray }}>{item.price} points</Text>
+                    <MilesDetailText>{(item.miles_required == 0) ? "no minimum miles required" : `required to reach ${item.miles_required} miles first`}</MilesDetailText>
                   </ItemCardDescription>
                   <ItemCardArrow item={item}>
                     <Ionicons name="md-arrow-forward" color={theme.color.yellowLight} size={24} />
@@ -127,8 +130,18 @@ const InfoTitle = styled(Text)`
 `;
 
 const NumericText = styled(Text)`
-  color: ${theme.color.white};
+  color: ${theme.color.yellow};
   font-size: 30;
+`;
+
+const UserInfoBottom = styled(Bold)`
+  color: ${theme.color.white};
+  text-align: center;
+  font-size: 12;
+`;
+
+const MilesDetailText = styled(Text)`
+  font-size: 10;
 `;
 
 const VerticalDivider = styled.View`

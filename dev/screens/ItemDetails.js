@@ -87,11 +87,11 @@ export default class ItemDetailsScreen extends React.Component {
 
           <Container>
             <Row style={{ marginBottom: 24 }}>
-              <Image source={IconDiscount} style={{ width: 52, height: 52 }} resizeMode="contain" />
+              <Image source={IconDiscount} style={{ width: 52, height: 52, marginTop: 7 }} resizeMode="contain" />
               <Flex style={{ marginLeft: 24 }}>
-                <Text>Buy Items</Text>
                 <BigBold>{this.item.name}</BigBold>
-                <Text>{this.item.price} points · {this.item.miles_required} miles</Text>
+                <Bold>{this.item.price} points</Bold>
+                <Text>{(this.item.miles_required == 0) ? "no minimum miles required" : `required to reach ${this.item.miles_required} miles first`}</Text>
               </Flex>
             </Row>
 
