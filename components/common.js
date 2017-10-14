@@ -1,3 +1,4 @@
+// Common Styling
 import styled from 'styled-components/native';
 import { LinearGradient } from 'expo';
 import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';

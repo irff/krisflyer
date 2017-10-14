@@ -1,3 +1,5 @@
+// Progress Bar Component
+
 import React from 'react';
 import styled from 'styled-components/native';
 import theme from '../constants/theme';

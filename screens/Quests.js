@@ -1,3 +1,4 @@
+// Quest page
 import React from 'react';
 import { ScrollView, Image, View, TouchableOpacity } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';

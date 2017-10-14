@@ -1,3 +1,4 @@
+// Detail of a specific item
 import React from 'react';
 import { ScrollView, Image, View, TouchableWithoutFeedback, TouchableOpacity, Alert } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';

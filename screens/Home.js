@@ -1,3 +1,4 @@
+// Latest version of Home Screen
 import React from 'react';
 import { ScrollView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';

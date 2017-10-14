@@ -1,3 +1,4 @@
+// Initial app loading screen
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { StackNavigator } from 'react-navigation';

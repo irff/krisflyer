@@ -1,3 +1,6 @@
+// Stores: the state of everything in the App
+// A store should contain multiple Models
+// Everything is stored using 'mobx' state manager
 import { observable, action, computed, autorun } from 'mobx';
 import {
 	LeaderModel,

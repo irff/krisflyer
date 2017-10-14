@@ -1,3 +1,4 @@
+// Global & Friends leaderboard screen
 import React from 'react';
 import { ScrollView, Image, View, TouchableOpacity, Share } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';

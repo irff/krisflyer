@@ -1,6 +1,9 @@
+// Singular Model Store
+
 import { observable, action, computed } from 'mobx';
 import * as Utils from '../utils';
 
+// Model concerning a single User
 export class UserModel {
     constructor(store, name, miles, points, level) {
         this.store = store;
@@ -19,23 +22,21 @@ export class UserModel {
     @observable level = 0;
     @observable bonus_multiplier = 1;
 
+    // Get Level Name
     @computed get getLevelName() {
         levels = this.store.rootStore.levelListStore.levels;
-        console.log(`wkwwk ${levels[this.level].name}`);
         return levels[this.level].name;
     }
 
     @computed get nextLevelName() {
         next_level = this.level + 1;
         levels = this.store.rootStore.levelListStore.levels;
-        console.log(`wkwwk ${levels[this.level].name}`);
         return levels[next_level].name;
     }
 
     @computed get getRemainingMiles() {
         next_level = this.level + 1;
 
-        console.log(`jebajeb`);
         if(next_level <= 2) {
             levels = this.store.rootStore.levelListStore.levels;
             miles_required = levels[next_level].checkpoint - this.miles;
@@ -45,6 +46,8 @@ export class UserModel {
         }
     }
 
+    // Add miles to the current user by {value}
+    // When miles reach certain threshold, advance to next level
     @action addMiles(value) {
         this.miles += value;
         levels = this.store.rootStore.levelListStore.levels;
@@ -80,6 +83,8 @@ export class UserModel {
     }
 }
 
+
+// A Single Level available in the KrisFlyer program
 export class LevelModel {
     constructor(number, name, checkpoint, bonus_multiplier) {
         this.id = Utils.uuid();
@@ -96,6 +101,7 @@ export class LevelModel {
     checkpoint = 0;
 }
 
+// A Single Milestone (with checkpoints & their rewards)
 export class MilestoneModel {
     constructor(checkpoint, rewards) {
         this.id = Utils.uuid();
@@ -108,6 +114,7 @@ export class MilestoneModel {
     rewards = 0;    
 }
 
+// A Model concerning a single item available to buy
 export class ItemModel {
     constructor(store, name, description, terms, usage_type, price, miles_required, expired) {
         this.store = store;
@@ -156,6 +163,7 @@ export class ItemModel {
     }
 }
 
+// Model that concerns the item already bought by User
 export class PurchasedItemModel {
     constructor(item, invalidated=false) {
         this.purchase_date = new Date();
@@ -188,6 +196,7 @@ export class PurchasedItemModel {
 
 }
 
+// Model that concerns a reward in the form of Voucher
 export class VoucherModel {
     constructor(name, merchant, code, amount, type) {
         this.id = Utils.uuid();
@@ -208,6 +217,7 @@ export class VoucherModel {
     @observable used_datetime = '';
 }
 
+// An event with start and end time, used to trigger some action
 export class EventModel {
     constructor(name, description, start_datetime, end_datetime, is_active) {
         this.id = Utils.uuid();
@@ -226,6 +236,7 @@ export class EventModel {
 }
 
 
+// A model concerning a single entry in the leaderboard
 export class LeaderModel {
     constructor(name, miles, purchased_item_list) {
         this.name = name,

@@ -1,3 +1,4 @@
+// Home Screen (Old Version), currently not being used anywhere, only for testing purposes
 import React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
 import Expo, { Constants } from 'expo';

@@ -1,3 +1,5 @@
+// Default color constants
+
 export default {
 	color: {
 		statusBar: '#333',

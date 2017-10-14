@@ -1,3 +1,4 @@
+// List of Items
 import React from 'react';
 import { ScrollView, Image, View, TouchableWithoutFeedback, TouchableOpacity, TextInput } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';

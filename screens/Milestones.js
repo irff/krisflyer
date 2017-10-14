@@ -1,3 +1,4 @@
+// Milestones screen
 import React from 'react';
 import { ImageBackground, ScrollView } from 'react-native';
 
