@@ -35,11 +35,17 @@ import TopUpBg from '../assets/illustrations/topUp.png';
 @inject('store')
 @observer
 export default class TopUpScreen extends React.Component {
+  
+  state = {
+    selected: 0,
+  };
 
   render() {
     const { goBack, navigate } = this.props.navigation;
 
     const { user } = this.props.store.userStore;
+    const { items: paymentItems } = this.props.store.paymentStore;
+
 
     return (
       <BaseScreen>
@@ -68,20 +74,19 @@ export default class TopUpScreen extends React.Component {
             </TopUpCard>
 
             <Bold>Top Up Amounts</Bold>
-            <SelectionCard>
-              <Row style={{ alignItems: 'center' }}>
-                <Flex>
-                  <Row style={{ alignItems: 'baseline' }}>
-                    <PointsText>{formatNumber(3125)}</PointsText>
-                    <Text style={{ marginLeft: 4 }}>pts</Text>
-                  </Row>
-                </Flex>
-                <Bold style={{ fontSize: 16 }}>$ 25</Bold>
-              </Row>
-            </SelectionCard>
-            <SelectionCard selected />
-            <SelectionCard />
-            <SelectionCard />
+            {paymentItems.map((item, idx) =>
+              <SelectionCard key={item.id} selected={idx == this.state.selected}>
+                <Row style={{ alignItems: 'center' }}>
+                  <Flex>
+                    <Row style={{ alignItems: 'baseline' }}>
+                      <PointsText>{formatNumber(item.points)}</PointsText>
+                      <Text style={{ marginLeft: 4 }}>pts</Text>
+                    </Row>
+                  </Flex>
+                  <Bold style={{ fontSize: 16 }}>$ {item.amount}</Bold>
+                </Row>
+              </SelectionCard>
+            )}
         	</Container>
 
         </ScrollView>
