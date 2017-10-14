@@ -62,7 +62,7 @@ export default class HomeScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('profile')}>
                 <HeaderIcon name="user" size={16} color={theme.color.white } />
               </TouchableOpacity>
             </NavBar>

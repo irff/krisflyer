@@ -8,7 +8,6 @@ import HomeScreen from './screens/Home';
 import ProfileScreen from './screens/Profile';
 import ItemDetailsScreen from './screens/ItemDetails';
 import ItemsScreen from './screens/Items';
-import InventoryScreen from './screens/Inventory';
 import LeaderboardScreen from './screens/Leaderboard';
 import QuestsScreen from './screens/Quests';
 import MilestonesScreen from './screens/Milestones';
@@ -22,6 +21,7 @@ export default class App extends React.Component {
     await Font.loadAsync({
       'app-regular': require('./assets/fonts/Rubik-Regular.ttf'),
       'app-bold': require('./assets/fonts/Rubik-Medium.ttf'),
+      'app-light': require('./assets/fonts/Rubik-Light.ttf'),
     });
 
     this.setState({ fontLoaded: true });
@@ -49,9 +49,6 @@ const Navigator = StackNavigator({
   },
   items: {
     screen: ItemsScreen,
-  },
-  inventory: {
-    screen: InventoryScreen,
   },
   leaderboard: {
     screen: LeaderboardScreen,

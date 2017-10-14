@@ -32,6 +32,12 @@ export const Text = styled.Text`
 	font-size: 14;
 `;
 
+export const LightText = styled.Text`
+	font-family: app-light;
+	margin-top: 2;
+	margin-bottom: 2;
+`;
+
 export const Bold = styled.Text`
 	font-family: app-bold;
 	margin-top: 2;

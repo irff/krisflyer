@@ -137,7 +137,7 @@ export default class LeaderboardScreen extends React.Component {
 
     return (
       <BaseScreen>
-        <ScrollView contentContainerStyle={{ flex: 1 }} removeClippedSubviews={false}>
+        <ScrollView contentContainerStyle={{ flex: 1 }}>
           <Header colors={[ theme.color.black, theme.color.blue ]} style={{ height: 200 }}>
             <NavBar>
               <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
