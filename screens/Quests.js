@@ -1,4 +1,3 @@
-// Quest page
 import React from 'react';
 import { ScrollView, Image, View, TouchableOpacity } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
@@ -30,12 +29,66 @@ import IconDiscount from '../assets/icons/discount.png';
 @inject('store')
 @observer
 export default class QuestsScreen extends React.Component {
+
+  static quests = [
+    {
+      title: 'Fly 3 times to any city in the period of 6 months',
+      reward: 4000,
+      progress: 0.33,
+      is_expired: false,
+    },
+    {
+      title: 'Shop anything in total of $400 in KrisFlyerSpree',
+      reward: 2000,
+      progress: 0.2,
+      is_expired: false,
+    },
+    {
+      title: 'Try Singapore Stopover Holiday 3D2N Package',
+      reward: 2500,
+      progress: 0,
+      is_expired: false,
+    },
+    {
+      title: 'Fly to any city with Business Class',
+      reward: 3700,
+      progress: 0,
+      is_expired: false,
+    },
+    {
+      title: 'Purchase additional 10 kgs of baggage',
+      reward: 1000,
+      progress: 1,
+      is_expired: true,
+    },
+    {
+      title: 'Shop anything in total of $200 in KrisFlyerSpree',
+      reward: 500,
+      progress: 0.2,
+      is_expired: true,
+    },
+  ];
+
+  state = {
+    sections: [ true, false, false, false ],
+  }
+
+  toggleSection = id => () => this.setState({
+    sections: [
+      ...this.state.sections.slice(0, id),
+      !this.state.sections[id],
+      ...this.state.sections.slice(id+1),
+    ],
+  });
+
   render() {
     const { goBack, navigate } = this.props.navigation;
+    const quests =  QuestsScreen.quests;
+    const sectionState = this.state.sections;
 
     return (
       <BaseScreen>
-        <ScrollView contentContainerStyle={{ flex: 1 }}>
+        <ScrollView>
           <Header colors={[ theme.color.black, theme.color.blue ]}>
             <NavBar>
               <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
@@ -56,21 +109,103 @@ export default class QuestsScreen extends React.Component {
 
           <Container>
 
-            <SectionHead>
-              <SectionTitle>Quests in Progress</SectionTitle>
-              <Ionicons name="ios-arrow-up" size={18} color={theme.color.gray} />
-            </SectionHead>
+            <TouchableOpacity activeOpacity={0.75} onPress={this.toggleSection(0)}>
+              <SectionHead>
+                <SectionTitle>Quests in Progress</SectionTitle>
+                <Ionicons name={`ios-arrow-${sectionState[0] ? 'up' : 'down'}`} size={18} color={theme.color.gray} />
+              </SectionHead>
+            </TouchableOpacity>
 
-            <ItemCard>
-              <Row style={{ alignItems: 'center' }}>
-                <ItemCardImage source={IconDiscount} resizeMode="contain"/>
-                <ItemCardDescription>
-                  <BigBold numberOfLines={1}>Fly 3 times in 6 months</BigBold>
-                  <Text>Rewards: <Bold>4000</Bold> points</Text>
-                </ItemCardDescription>
-              </Row>
-              <SecondaryButton title="See Details" />
-            </ItemCard>
+            {sectionState[0] &&
+              quests.filter(q => q.progress > 0 && q.progress < 1 && !q.is_expired).map((quest, idx) =>
+              <QuestCard key={idx}>
+                <Row style={{ alignItems: 'center' }}>
+                  <QuestCardImage source={IconDiscount} resizeMode="contain"/>
+                  <QuestCardDescription>
+                    <BigBold numberOfLines={1}>{quest.title}</BigBold>
+                    <Text>Rewards: <Bold>{quest.reward}</Bold> points</Text>
+                  </QuestCardDescription>
+                </Row>
+                <Row style={{ alignItems: 'center', marginBottom: 16 }}>
+                  <Flex>
+                    <ProgressBar width={quest.progress} />
+                  </Flex>
+                  <Text style={{ marginLeft: 8 }}>{Math.floor(quest.progress * 100)} %</Text>
+                </Row>
+                <SecondaryButton title="See Details" />
+              </QuestCard>
+            )}
+
+            <TouchableOpacity activeOpacity={0.75} onPress={this.toggleSection(1)}>
+              <SectionHead>
+                <SectionTitle>Available Quests</SectionTitle>
+                <Ionicons name={`ios-arrow-${sectionState[1] ? 'up' : 'down'}`} size={18} color={theme.color.gray} />
+              </SectionHead>
+            </TouchableOpacity>
+
+            {sectionState[1] &&
+              quests.filter(q => q.progress === 0 && !q.is_expired).map((quest, idx) =>
+              <QuestCard key={idx}>
+                <Row style={{ alignItems: 'center' }}>
+                  <QuestCardImage source={IconDiscount} resizeMode="contain"/>
+                  <QuestCardDescription>
+                    <BigBold numberOfLines={1}>{quest.title}</BigBold>
+                    <Text>Rewards: <Bold>{quest.reward}</Bold> points</Text>
+                  </QuestCardDescription>
+                </Row>
+                <SecondaryButton title="See Details" />
+              </QuestCard>
+            )}
+
+            <TouchableOpacity activeOpacity={0.75} onPress={this.toggleSection(2)}>
+              <SectionHead>
+                <SectionTitle>Finished Quests</SectionTitle>
+                <Ionicons name={`ios-arrow-${sectionState[2] ? 'up' : 'down'}`} size={18} color={theme.color.gray} />
+              </SectionHead>
+            </TouchableOpacity>
+
+            {sectionState[2] &&
+              quests.filter(q => q.progress === 1).map((quest, idx) =>
+              <QuestCard key={idx}>
+                <Row style={{ alignItems: 'center' }}>
+                  <QuestCardImage source={IconDiscount} resizeMode="contain"/>
+                  <QuestCardDescription>
+                    <BigBold numberOfLines={1}>{quest.title}</BigBold>
+                    <Text>Rewards: <Bold>{quest.reward}</Bold> points</Text>
+                  </QuestCardDescription>
+                </Row>
+                <SecondaryButton title="See Details" />
+              </QuestCard>
+            )}
+
+            <TouchableOpacity activeOpacity={0.75} onPress={this.toggleSection(3)}>
+              <SectionHead>
+                <SectionTitle>Quests in Progress</SectionTitle>
+                <Ionicons name={`ios-arrow-${sectionState[3] ? 'up' : 'down'}`} size={18} color={theme.color.gray} />
+              </SectionHead>
+            </TouchableOpacity>
+
+            {sectionState[3] &&
+              quests.filter(q => q.progress < 1 && q.is_expired).map((quest, idx) =>
+              <QuestCard key={idx}>
+                <Row style={{ alignItems: 'center' }}>
+                  <QuestCardImage source={IconDiscount} resizeMode="contain"/>
+                  <QuestCardDescription>
+                    <BigBold numberOfLines={1}>{quest.title}</BigBold>
+                    <Text>Rewards: <Bold>{quest.reward}</Bold> points</Text>
+                  </QuestCardDescription>
+                </Row>
+
+                {quest.progress > 0 &&
+                  <Row style={{ alignItems: 'center', marginBottom: 16 }}>
+                    <Flex>
+                      <ProgressBar width={quest.progress} disabled />
+                    </Flex>
+                    <Text style={{ marginLeft: 8 }}>{Math.floor(quest.progress * 100)} %</Text>
+                  </Row>}
+                <SecondaryButton title="See Details" />
+              </QuestCard>
+            )}
 
           </Container>
 
@@ -91,7 +226,7 @@ const Container = styled.View`
 
 const BigBold = styled(Bold)`font-size: 14;`;
 
-const ItemCard = styled.View`
+const QuestCard = styled.View`
   background-color: ${theme.color.white};
   border-radius: 4;
   elevation: 2;
@@ -102,21 +237,21 @@ const ItemCard = styled.View`
   padding-bottom: 12;
 `;
 
-const ItemCardImage = styled.Image`
+const QuestCardImage = styled.Image`
   width: 40;
   height: 40;
   margin-left: 8;
   margin-right: 20;
 `;
 
-const ItemCardDescription = styled.View`
+const QuestCardDescription = styled.View`
   margin-top: 24;
   margin-bottom: 24;
   margin-right: 8;
   flex: 1;
 `;
 
-const ItemCardProgressView = styled.View`
+const QuestCardProgressView = styled.View`
   padding-top: 3;
   padding-bottom: 3;
   padding-right: 3;
@@ -127,6 +262,7 @@ const ItemCardProgressView = styled.View`
 `;
 
 const SectionHead = styled(Row)`
+  margin-top: 8;
   padding-bottom: 20;
 `;
 
