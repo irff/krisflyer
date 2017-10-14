@@ -92,7 +92,6 @@ export default class QuestsScreen extends React.Component {
                   </Flex>
                   <Text style={{ marginLeft: 8 }}>{Math.floor(quest.progress * 100)} %</Text>
                 </Row>
-                <SecondaryButton title="See Details" />
               </QuestCard>
             )}
 
@@ -113,7 +112,6 @@ export default class QuestsScreen extends React.Component {
                     <Text>Rewards: <Bold>{quest.reward}</Bold> points</Text>
                   </QuestCardDescription>
                 </Row>
-                <SecondaryButton title="See Details" />
               </QuestCard>
             )}
 
@@ -134,7 +132,6 @@ export default class QuestsScreen extends React.Component {
                     <Text>Rewards: <Bold>{quest.reward}</Bold> points</Text>
                   </QuestCardDescription>
                 </Row>
-                <SecondaryButton title="See Details" />
               </QuestCard>
             )}
 
@@ -163,7 +160,6 @@ export default class QuestsScreen extends React.Component {
                     </Flex>
                     <Text style={{ marginLeft: 8 }}>{Math.floor(quest.progress * 100)} %</Text>
                   </Row>}
-                <SecondaryButton title="See Details" />
               </QuestCard>
             )}
 
