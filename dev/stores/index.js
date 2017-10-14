@@ -546,36 +546,42 @@ class PaymentStore {
 			25,
 			'usd',
 			3125,
+			0,
 			'3,125 pts'
 			),
 		new TopUpItemModel(this,
 			50,
 			'usd',
 			6250,
+			0,
 			'6,250 pts'
 			),
 		new TopUpItemModel(this,
 			100,
 			'usd',
 			12500,
+			625,
 			'12,500 pts'
 			),
 		new TopUpItemModel(this,
 			150,
 			'usd',
 			18750,
+			1875,
 			'18,750 pts'
 			),
 		new TopUpItemModel(this,
 			200,
 			'usd',
 			25000,
+			3750,
 			'25,000 pts'
 			),
 		new TopUpItemModel(this,
 			300,
 			'usd',
 			37500,
+			7500,
 			'37,500 pts'
 			)
 	];
