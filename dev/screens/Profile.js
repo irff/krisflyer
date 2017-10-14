@@ -17,6 +17,7 @@ import {
   Bold,
   Header,
   NavBar,
+  DummyNavIcon,
   HeaderIcon,
   HeaderIonicon,
 } from '../components/common';
@@ -96,7 +97,7 @@ export default class InventoryScreen extends React.Component {
                 </AlignCenter>
               </Flex>
               
-              <HeaderIcon name="user" size={16} color="transparent" />
+              <DummyNavIcon />
             </NavBar>
           </Header>
 

@@ -46,22 +46,28 @@ export const Bold = styled.Text`
 `;
 
 export const Header = styled(LinearGradient)`
-  padding-top: 20;
-  overflow: visible;
+	padding-top: 20;
+	overflow: visible;
 `;
 
 export const NavBar = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 16;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 16;
 `;
 
 export const HeaderIcon = styled(SimpleLineIcons)`
-  margin-left: 16;
-  margin-right: 16;
+	margin-left: 16;
+	margin-right: 16;
 `;
 
 export const HeaderIonicon = styled(Ionicons)`
-  margin-left: 16;
-  margin-right: 16;
+	margin-left: 16;
+	margin-right: 16;
+`;
+
+export const DummyNavIcon = styled.View`
+	margin-left: 16;
+	width: 16;
+	margin-right: 16;
 `;

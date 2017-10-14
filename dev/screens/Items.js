@@ -17,6 +17,7 @@ import {
   Header,
   NavBar,
   HeaderIcon,
+  DummyNavIcon,
   HeaderIonicon,
 } from '../components/common';
 
@@ -49,9 +50,7 @@ export default class ItemsScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
-                <HeaderIcon name="user" size={16} color={theme.color.white } />
-              </TouchableOpacity>
+              <DummyNavIcon />
             </NavBar>
 
             <HeaderInfoContainer style={{ marginTop: 32, marginBottom: 44 }}>

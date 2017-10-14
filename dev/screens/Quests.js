@@ -13,6 +13,7 @@ import {
   Row,
   Text,
   Bold,
+  DummyNavIcon,
   Header,
   NavBar,
   HeaderIcon,
@@ -61,9 +62,7 @@ export default class QuestsScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
-                <HeaderIcon name="user" size={16} color={theme.color.white } />
-              </TouchableOpacity>
+              <DummyNavIcon />
             </NavBar>
 
           </Header>

@@ -15,6 +15,7 @@ import {
   Text,
   Bold,
   Header,
+  DummyNavIcon,
   NavBar,
   HeaderIcon,
   HeaderIonicon,
@@ -79,9 +80,7 @@ export default class ItemDetailsScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('profile')}>
-                <HeaderIcon name="user" size={16} color={theme.color.white } />
-              </TouchableOpacity>
+              <DummyNavIcon />
             </NavBar>
           </Header>
 

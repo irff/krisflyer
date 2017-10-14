@@ -15,6 +15,7 @@ import {
   Text,
   Bold,
   Header,
+  DummyNavIcon,
   NavBar,
   HeaderIcon,
   HeaderIonicon,
@@ -29,7 +30,7 @@ import IconDiscount from '../assets/icons/discount.png';
 
 @inject('store')
 @observer
-export default class QuestsScreen extends React.Component {
+export default class MilestonesScreen extends React.Component {
   
   data = [
 	{
@@ -142,9 +143,7 @@ export default class QuestsScreen extends React.Component {
                 </AlignCenter>
               </Flex>
 
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('inventory')}>
-                <HeaderIcon name="user" size={16} color={theme.color.white } />
-              </TouchableOpacity>
+              <DummyNavIcon />
             </NavBar>
 
           </Header>

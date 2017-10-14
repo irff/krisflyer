@@ -11,6 +11,7 @@ import ItemDetailsScreen from './screens/ItemDetails';
 import ItemsScreen from './screens/Items';
 import LeaderboardScreen from './screens/Leaderboard';
 import QuestsScreen from './screens/Quests';
+import TopUpScreen from './screens/TopUp';
 import MilestonesScreen from './screens/Milestones';
 
 export default class App extends React.Component {
@@ -62,6 +63,9 @@ const Navigator = StackNavigator({
   },
   milestones: {
     screen: MilestonesScreen,
+  },
+  topup: {
+    screen: TopUpScreen,
   },
 }, {
   initialRouteName: 'home',

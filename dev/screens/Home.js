@@ -1,6 +1,6 @@
 // Latest version of Home Screen
 import React from 'react';
-import { ScrollView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, Image, TouchableOpacity, TouchableWithoutFeedback, Alert } from 'react-native';
 import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
 import theme from '../constants/theme';
@@ -13,11 +13,12 @@ import {
   Text,
   Bold,
   Header,
+  DummyNavIcon,
   NavBar,
   HeaderIcon,
 } from '../components/common';
 import { formatNumber } from '../utils';
-import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
+import { SimpleLineIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
 
 import BaseScreen from '../components/BaseScreen';
@@ -45,6 +46,9 @@ export default class HomeScreen extends React.Component {
   };
 
   banners = [ ImgBanner1, ImgBanner2, ImgBanner3 ];
+  bannerLinks = [ 'milestones', 'items', 'quests' ];
+  pointsDetails = 'Points is an in-app currency. You can buy items with points. You will get points everytime you accrue miles, finish quests, or reach milestone. The interesting part is, you can top up your points as much as you want!';
+  milesDetails = 'Miles is experience points. You will earn miles every time you fly or shop from partners. You can\'t top up your miles and it  will never be subtracted. Miles will determine what items you can shop from partners.';
 
   render() {
     const { navigate } = this.props.navigation;
@@ -55,7 +59,7 @@ export default class HomeScreen extends React.Component {
         <ScrollView>
           <Header colors={[ theme.color.black, theme.color.blue ]}>
             <NavBar>
-              <HeaderIcon name="menu" size={16} color={theme.color.white} />
+              <DummyNavIcon />
               
               <Flex>
                 <AlignCenter>
@@ -70,7 +74,7 @@ export default class HomeScreen extends React.Component {
 
             <ScrollView horizontal>
               {this.banners.map((banner, idx) =>
-                <BannerCard key={idx}>
+                <BannerCard key={idx} activeOpacity={0.75} onPress={() => navigate(this.bannerLinks[idx])}>
                   <BannerImg resizeMode="cover" source={banner} />
                 </BannerCard>
               )}
@@ -79,17 +83,27 @@ export default class HomeScreen extends React.Component {
           </Header>
 
           <Section>
-            <NameText>{user.name}</NameText>
+            <NameText>Hi, <Bold>{user.name}</Bold>!</NameText>
             <Row>
               <Flex>
-                <UserInfoTop>YOU'VE REACHED</UserInfoTop>
-                <ValueText>{formatNumber(user.miles)}</ValueText>
-                <UserInfoBottom>MILES</UserInfoBottom>
+                <TouchableOpacity activeOpacity={0.75} onPress={() => Alert.alert('What is Miles?', this.milesDetails)}>
+                  <UserInfoTop>YOU'VE REACHED</UserInfoTop>
+                  <ValueText>{formatNumber(user.miles)}</ValueText>
+                  <Row style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <UserInfoBottom>MILES</UserInfoBottom>
+                    <FontAwesome name="question-circle" color={theme.color.lightGray} size={12} style={{ marginLeft: 4 }} />
+                  </Row>
+                </TouchableOpacity>
               </Flex>
               <Flex>
-                <UserInfoTop>YOU OWN</UserInfoTop>
-                <ValueText>{formatNumber(user.points)}</ValueText>
-                <UserInfoBottom>POINTS</UserInfoBottom>
+                <TouchableOpacity activeOpacity={0.75} onPress={() => Alert.alert('What is Points?', this.pointsDetails)}>
+                  <UserInfoTop>YOU OWN</UserInfoTop>
+                  <ValueText>{formatNumber(user.points)}</ValueText>
+                  <Row style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <UserInfoBottom>POINTS</UserInfoBottom>
+                    <FontAwesome name="question-circle" color={theme.color.lightGray} size={12} style={{ marginLeft: 4 }} />
+                  </Row>
+                </TouchableOpacity>
               </Flex>
             </Row>
           </Section>
@@ -99,7 +113,6 @@ export default class HomeScreen extends React.Component {
           <Section>
             <SectionHead>
               <SectionTitle>Your Miles</SectionTitle>
-              <Ionicons name="ios-arrow-up" size={24} color={theme.color.gray} />
             </SectionHead>
 
             <HeadingNavigation>
@@ -137,14 +150,22 @@ export default class HomeScreen extends React.Component {
           <Section>
             <SectionHead>
               <SectionTitle>Your Points</SectionTitle>
-              <Ionicons name="ios-arrow-up" size={24} color={theme.color.gray} />
             </SectionHead>
             <Text>You own <YellowNum>{formatNumber(user.points)}</YellowNum> redeemable points</Text>
 
             <BorderDivider />
 
-            <BoostText>Boost your points by completing quests!</BoostText>
-            <Button title="Explore Quests" onPress={() => navigate('quests')} />
+            <Row style={{ alignItems: 'stretch' }}>
+              <BlueBox style={{ marginRight: 12 }} >
+                <Text style={{ color: theme.color.white, flex: 1, marginBottom: 8 }}>Top up to get points instantly!</Text>
+                <Button title="Top Up Now" onPress={() => navigate('topup')} />
+              </BlueBox>
+
+              <BlueBox>
+                <Text style={{ color: theme.color.white, flex: 1, marginBottom: 8 }}>Boost your points by completing quests!</Text>
+                <Button title="Explore Quests" onPress={() => navigate('quests')} />
+              </BlueBox>
+            </Row>
 
             <Button title="Pay with Stripe" onPress={() => this.props.store.paymentStore.topUpPoints() } />
 
@@ -199,7 +220,7 @@ const HeadingNavigation = styled.View`
   margin-bottom: 16;
 `;
 
-const NameText = styled(Bold)`
+const NameText = styled(Text)`
   text-align: center;
   margin-bottom: 20;
   font-size: 28;
@@ -230,7 +251,7 @@ const Section = styled.View`
   padding-right: 32; 
 `;
 
-const BannerCard = styled.View`
+const BannerCard = styled.TouchableOpacity`
   width: 280;
   height: 102;
   margin-left: 16;
@@ -288,4 +309,12 @@ const YellowNum = styled(Bold)`
 const ScrollPadding = styled.View`
   width: 32;
   background-color: transparent;
+`;
+
+const BlueBox = styled(Flex)`
+  background-color: ${theme.color.blue};
+  padding-top: 12;
+  padding-left: 12;
+  padding-right: 12;
+  padding-bottom: 12;
 `;
