@@ -141,7 +141,7 @@ export default class QuestsScreen extends React.Component {
 
             <TouchableOpacity activeOpacity={0.75} onPress={this.toggleSection(3)}>
               <SectionHead>
-                <SectionTitle>Quests in Progress</SectionTitle>
+                <SectionTitle>Expired Quests</SectionTitle>
                 <Ionicons name={`ios-arrow-${sectionState[3] ? 'up' : 'down'}`} size={18} color={theme.color.gray} />
               </SectionHead>
             </TouchableOpacity>
