@@ -4,6 +4,7 @@ import Expo, { Constants, LinearGradient } from 'expo';
 import styled from 'styled-components/native';
 import { Foundation } from '@expo/vector-icons';
 import { observer, inject } from 'mobx-react';
+import { CreditCardInput } from 'react-native-credit-card-input';
 import Timeline from 'react-native-timeline-listview'
 import theme from '../constants/theme';
 import {
@@ -40,12 +41,22 @@ export default class TopUpScreen extends React.Component {
     selected: 0,
   };
 
+  setCCInput = () => {
+    console.log(this.refs);
+    this.refs['ccinput'].setValues({
+      number: "5555 5555 5555 4444",
+      expiry: "10/22",
+      cvc: "123",
+      type: "master-card",
+      name: this.props.store.userStore.user.name,
+    })
+  }
+
   render() {
     const { goBack, navigate } = this.props.navigation;
 
     const { user } = this.props.store.userStore;
     const { items: paymentItems } = this.props.store.paymentStore;
-
 
     return (
       <BaseScreen>
@@ -75,19 +86,47 @@ export default class TopUpScreen extends React.Component {
 
             <Bold>Top Up Amounts</Bold>
             {paymentItems.map((item, idx) =>
-              <SelectionCard key={item.id} selected={idx == this.state.selected}>
+              <SelectionCard
+                key={item.id}
+                selected={idx == this.state.selected}
+                activeOpacity={0.75}
+                onPress={() => this.setState({ selected: idx })}
+              >
                 <Row style={{ alignItems: 'center' }}>
                   <Flex>
                     <Row style={{ alignItems: 'baseline' }}>
                       <PointsText>{formatNumber(item.points)}</PointsText>
-                      <Text style={{ marginLeft: 4 }}>pts</Text>
+                      <Text style={{ marginLeft: 4 }}>pts{' '}
+                        {item.bonus > 0 && <Bold>(+ {item.bonus} pts)</Bold>}
+                      </Text>
                     </Row>
                   </Flex>
                   <Bold style={{ fontSize: 16 }}>$ {item.amount}</Bold>
                 </Row>
               </SelectionCard>
             )}
-        	</Container>
+
+            <Bold style={{ marginTop: 16 }}>Credit Card Details</Bold>
+
+            <CreditCardInput
+              refs="ccinput"
+              allowScroll
+              cardImageFront={require('../assets/illustrations/cc.png')}
+              cardImageBack={require('../assets/illustrations/cc-back.png')}
+            />
+
+            <Button
+              style={{ marginTop: 16 }}
+              title="Top Up" 
+              onPress={() => this.props.store.paymentStore.topUpPoints(paymentItems[this.state.selected], {
+                number: '5555555555554444',
+                expMonth: 11,
+                expYear: 22,
+                cvc: '223',
+              })}
+            />
+          
+          </Container>
 
         </ScrollView>
       </BaseScreen>
@@ -113,7 +152,7 @@ const TopUpCard = styled.ImageBackground`
   border-radius: 4;
 `;
 
-const SelectionCard = styled.View`
+const SelectionCard = styled.TouchableOpacity`
   padding-top: 16;
   padding-left: 24;
   padding-right: 24;
